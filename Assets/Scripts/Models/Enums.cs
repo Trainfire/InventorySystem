@@ -1,7 +1,8 @@
 ﻿public enum CategoryType
 {
     None,
-    CategoryA,
-    CategoryB,
-    CategoryC,
+    Misc,
+    Consumable,
+    Weapon,
+    Cosmetic,
 }
