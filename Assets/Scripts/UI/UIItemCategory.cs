@@ -1,10 +1,9 @@
 ﻿using UnityEngine;
 using UnityEngine.UI;
-using System;
 
 namespace UI
 {
-    public class UIItemCategory : UIItem
+    public class UIItemCategory : UIItem<CategoryType>
     {
         public Text Name;
 
@@ -17,6 +16,25 @@ namespace UI
                 category = value;
                 Name.text = category.ToString().ToUpper();
             }
-        } 
+        }
+
+        protected override void OnDefault()
+        {
+            base.OnDefault();
+            Debug.Log("Defaulting...");
+            Name.color = Color.grey;
+        }
+
+        protected override void OnHighlight()
+        {
+            base.OnHighlight();
+            Name.color = Color.white;
+        }
+
+        protected override void OnSelect()
+        {
+            base.OnSelect();
+            Name.color = Color.blue;
+        }
     }
 }
