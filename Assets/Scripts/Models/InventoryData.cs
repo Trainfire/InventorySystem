@@ -8,6 +8,14 @@ namespace Models
     {
         private List<ItemData> items;
 
+        /// <summary>
+        /// Returns a copy of the list of items. A COPY!!!
+        /// </summary>
+        public List<ItemData> Items
+        {
+            get { return items.ToList(); }
+        }
+
         public int TotalWeight
         {
             get { return items.Sum(x => x.Weight); }

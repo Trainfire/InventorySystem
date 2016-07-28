@@ -9,9 +9,9 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 094fd96c588b8434c9466186d41abdef, type: 3}
-  m_Name: ItemOldHat
+  m_Name: ItemBox
   m_EditorClassIdentifier: 
-  Name: Old Hat
-  Description: An old, but classy hat. For the dapper individual.
-  Weight: 25
-  Category: 4
+  Name: Box
+  Description: Yep. It's a box.
+  Weight: 15
+  Category: 1

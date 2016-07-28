@@ -10,7 +10,7 @@ GameObject:
   - 4: {fileID: 486746}
   - 114: {fileID: 11403048}
   m_Layer: 0
-  m_Name: Apple
+  m_Name: Item
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
