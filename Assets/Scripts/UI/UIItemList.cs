@@ -1,4 +1,4 @@
-﻿using UnityEngine;
+using UnityEngine;
 using System;
 using System.Collections.Generic;
 using GameSystems;
@@ -39,33 +39,34 @@ namespace UI
 
         private void Item_Selected(UIItem item)
         {
+            ResetAll();
             index = items.IndexOf(item);
         }
 
         public void Prev()
         {
-            ResetCurrent();
+            ResetAll();
             Cycle(-1);
             items[index].Highlight();
         }
 
         public void Next()
         {
-            ResetCurrent();
+            ResetAll();
             Cycle(1);
             items[index].Highlight();
         }
 
         public void JumpToStart()
         {
-            ResetCurrent();
+            ResetAll();
             index = 0;
             items[index].Highlight();
         }
 
         public void JumpToEnd()
         {
-            ResetCurrent();
+            ResetAll();
             index = items.Count - 1;
             items[index].Highlight();
         }
@@ -101,10 +102,9 @@ namespace UI
             }
         }
 
-        void ResetCurrent()
+        void ResetAll()
         {
-            // Return the current item to a default state.
-            items[index].Default();
+            items.ForEach(x => x.Default());
         }
     }
 }

@@ -1,4 +1,4 @@
-﻿using UnityEngine;
+using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.EventSystems;
 using System;
@@ -11,6 +11,8 @@ namespace UI
         public event Action<UIItem> Highlighted;
         public event Action<UIItem> Selected;
 
+        public bool IsSelected { get; private set; }
+
         public virtual void OnAwake()
         {
             OnDefault();
@@ -21,6 +23,8 @@ namespace UI
             if (Defaulted != null)
                 Defaulted(this);
 
+            IsSelected = false;
+
             OnDefault();
         }
 
@@ -28,6 +32,8 @@ namespace UI
         {
             if (Selected != null)
                 Selected(this);
+
+            IsSelected = true;
 
             OnSelect();
         }
@@ -42,12 +48,14 @@ namespace UI
 
         void IPointerExitHandler.OnPointerExit(PointerEventData eventData)
         {
-            Default();
+            if (!IsSelected)
+                Default();
         }
 
         void IPointerEnterHandler.OnPointerEnter(PointerEventData eventData)
         {
-            Highlight();
+            if (!IsSelected)
+                Highlight();
         }
 
         void IPointerClickHandler.OnPointerClick(PointerEventData eventData)
