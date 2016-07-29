@@ -3,19 +3,14 @@ using UnityEngine.UI;
 
 namespace UI
 {
-    public class UIItemCategory : UIItem<CategoryType>
+    public class UIInventoryCategory : UIDataViewSelectable<CategoryType>
     {
         public Text Name;
 
-        private CategoryType category;
-        
-        public CategoryType Category
+        public override void OnInitialize(CategoryType data)
         {
-            set
-            {
-                category = value;
-                Name.text = category.ToString().ToUpper();
-            }
+            base.OnInitialize(data);
+            Name.text = data.ToString().ToUpper();
         }
 
         protected override void OnDefault()

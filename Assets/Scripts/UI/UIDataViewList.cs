@@ -8,20 +8,20 @@ namespace UI
     /// <summary>
     /// Provides a wrapped list of items that can be navigated using Prev() and Next().
     /// </summary>
-    public class UIItemList : MonoBehaviour
+    public class UIDataViewList : MonoBehaviour
     {
-        public UIItem Prototype;
+        public UIDataViewSelectable Prototype;
 
-        private List<UIItem> items;
+        private List<UIDataViewSelectable> items;
         private int index;
 
         public void Awake()
         {
-            items = new List<UIItem>();
+            items = new List<UIDataViewSelectable>();
             Prototype.gameObject.SetActive(false);
         }
 
-        public T AddItem<T>() where T : UIItem
+        public T AddItem<T>() where T : UIDataViewSelectable
         {
             if (Prototype == null)
             {
@@ -31,13 +31,26 @@ namespace UI
 
             var instance = UIUtility.Add<T>(transform, Prototype.gameObject);
             instance.Selected += Item_Selected;
+            instance.Removed += Item_Removed;
 
             items.Add(instance);
 
             return instance;
         }
 
-        private void Item_Selected(UIItem item)
+        public void Clear()
+        {
+            items.ForEach(x => x.Remove());
+            items.Clear();
+        }
+
+        private void Item_Removed(UIDataViewSelectable item)
+        {
+            item.Removed -= Item_Removed;
+            item.Selected -= Item_Selected;
+        }
+
+        private void Item_Selected(UIDataViewSelectable item)
         {
             ResetAll();
             index = items.IndexOf(item);

@@ -49,5 +49,15 @@ namespace Models
                 .Where(x => x.Category == category)
                 .ToList();
         }
+
+        public List<CategoryType> GetCategories()
+        {
+            var categories = items
+                .Select(x => x.Category)
+                .Distinct()
+                .ToList();
+
+            return categories;
+        }
     }
 }

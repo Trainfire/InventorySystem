@@ -5,11 +5,12 @@ using System;
 
 namespace UI
 {
-    public class UIItem : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler, IPointerClickHandler
+    public class UIDataViewSelectable : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler, IPointerClickHandler
     {
-        public event Action<UIItem> Defaulted;
-        public event Action<UIItem> Highlighted;
-        public event Action<UIItem> Selected;
+        public event Action<UIDataViewSelectable> Removed;
+        public event Action<UIDataViewSelectable> Defaulted;
+        public event Action<UIDataViewSelectable> Highlighted;
+        public event Action<UIDataViewSelectable> Selected;
 
         public bool IsSelected { get; private set; }
 
@@ -46,6 +47,14 @@ namespace UI
             OnHighlight();
         }
 
+        public void Remove()
+        {
+            if (Removed != null)
+                Removed(this);
+
+            Destroy(gameObject);
+        }
+
         void IPointerExitHandler.OnPointerExit(PointerEventData eventData)
         {
             if (!IsSelected)
@@ -68,12 +77,15 @@ namespace UI
         protected virtual void OnSelect() { }
     }
 
-    [RequireComponent(typeof(Button))]
-    public class UIItem<TData> : UIItem, IPointerEnterHandler, IPointerClickHandler
+    /// <summary>
+    /// Binds data to a selectable view.
+    /// </summary>
+    /// <typeparam name="TData"></typeparam>
+    public class UIDataViewSelectable<TData> : UIDataViewSelectable
     {
-        // Ick.
-        public event Action<TData> HighlightedData;
-        public event Action<TData> SelectedData;
+        public event Action<UIDataViewSelectable<TData>> RemovedData;
+        public event Action<UIDataViewSelectable<TData>> HighlightedData;
+        public event Action<UIDataViewSelectable<TData>> SelectedData;
 
         public TData Data { get; private set; }
 
@@ -82,7 +94,7 @@ namespace UI
             base.OnHighlight();
 
             if (HighlightedData != null)
-                HighlightedData(Data);
+                HighlightedData(this);
         }
 
         protected override void OnSelect()
@@ -90,13 +102,16 @@ namespace UI
             base.OnSelect();
 
             if (SelectedData != null)
-                SelectedData(Data);
+                SelectedData(this);
         }
 
         public void Initialize(TData data)
         {
-            OnDefault(); // hack
+            OnDefault();
             Data = data;
+            OnInitialize(data);
         }
+
+        public virtual void OnInitialize(TData data) { }
     }
 }
