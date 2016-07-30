@@ -2,6 +2,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.EventSystems;
 using System;
+using Stylesheet;
 
 namespace UI
 {
@@ -11,6 +12,10 @@ namespace UI
         public event Action<UIDataViewSelectable> Defaulted;
         public event Action<UIDataViewSelectable> Highlighted;
         public event Action<UIDataViewSelectable> Selected;
+
+        public ColorData SelectedColor;
+        public ColorData HighlightedColor;
+        public ColorData DefaultColor;
 
         public bool SelectableByMouse;
 

@@ -16,19 +16,19 @@ namespace UI
         protected override void OnDefault()
         {
             base.OnDefault();
-            Name.color = new Color(0.4f, 0.4f, 0.4f);
+            Name.color = DefaultColor.Color;
         }
 
         protected override void OnHighlight()
         {
             base.OnHighlight();
-            Name.color = Color.white;
+            Name.color = HighlightedColor.Color;
         }
 
         protected override void OnSelect()
         {
             base.OnSelect();
-            Name.color = new Color(0.7f, 0.7f, 0.7f);
+            Name.color = SelectedColor.Color;
         }
     }
 }

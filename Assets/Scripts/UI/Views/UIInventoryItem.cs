@@ -1,4 +1,4 @@
-﻿using UnityEngine;
+using UnityEngine;
 using UnityEngine.UI;
 using Models;
 
@@ -16,19 +16,19 @@ namespace UI
         protected override void OnDefault()
         {
             base.OnDefault();
-            Name.color = Color.grey;
+            Name.color = DefaultColor.Color;
         }
 
         protected override void OnHighlight()
         {
             base.OnHighlight();
-            Name.color = Color.white;
+            Name.color = HighlightedColor.Color;
         }
 
         protected override void OnSelect()
         {
             base.OnSelect();
-            Name.color = Color.blue;
+            Name.color = SelectedColor.Color;
         }
     }
 }
