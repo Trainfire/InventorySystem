@@ -21,6 +21,15 @@ public class AnimatorScroller : MonoBehaviour
 
     public void ScrollTo(Transform target)
     {
+        StopAllCoroutines();
+        StartCoroutine(WaitThenScrollTo(target));
+    }
+
+    IEnumerator WaitThenScrollTo(Transform target)
+    {
+        // Classic Unity hack. This should delay this method until layout changes have been made by the UI.
+        yield return new WaitForEndOfFrame();
+
         var targetRect = target as RectTransform;
         var targetY = Mathf.Abs(targetRect.anchoredPosition.y) + targetRect.rect.height / 2f;
 
@@ -42,6 +51,7 @@ public class AnimatorScroller : MonoBehaviour
             }
             else
             {
+                rectTransform.anchoredPosition = targetPosition;
                 doScroll = false;
             }
         }

@@ -21,18 +21,22 @@ namespace UI
 
         public void Initialize(Game game)
         {
+            // Get inventory.
             inventory = game.Data.Inventory;
 
             ItemsPanel.gameObject.SetActive(false);
             ItemPreview.gameObject.SetActive(false);
 
+            // Handles navigation between the Category and Items panel.
             navigation = gameObject.AddComponent<ListNavigation>();
             navigation.Register(Categories);
             navigation.Register(Items);
             navigation.Focused += Navigation_FocusedChanged;
 
+            // Animates the item panel.
             ItemsScroller = Items.gameObject.AddComponent<AnimatorScroller>();
 
+            // Register for input.
             InputManager.RegisterHandler(this);
 
             // Build category list.
@@ -46,6 +50,7 @@ namespace UI
 
         private void Category_Selected(UIDataViewSelectable<CategoryType> dataView)
         {
+            // Clear all items once a category is selected before repopulating it with the new items.
             Items.Clear();
 
             foreach (var item in inventory.GetItemsFromCategory(dataView.Data))
@@ -59,6 +64,7 @@ namespace UI
 
         private void Navigation_FocusedChanged(UIDataViewList dataViewList)
         {
+            // Clear the buttons displayed at the bottom of the UI.
             ControlList.Clear();
 
             // Select the first item when the Items list is focused.
@@ -69,6 +75,7 @@ namespace UI
 
                 ItemsPanel.gameObject.SetActive(true);
 
+                // Highlight first item by default.
                 if (Items.Count != 0)
                 {
                     Items.Highlight(0);
@@ -83,9 +90,10 @@ namespace UI
             if (dataViewList == Categories)
             {
                 Categories.Highlight();
+
                 ItemsPanel.gameObject.SetActive(false);
-                Items.ResetAll();
                 ItemPreview.gameObject.SetActive(false);
+
                 currentItemView = null;
             }
         }
@@ -104,8 +112,12 @@ namespace UI
         private void Item_Highlighted(UIDataViewSelectable<ItemData> dataView)
         {
             currentItemView = dataView;
+
+            // Update preview.
             ItemPreview.SetData(dataView.Data);
-            ItemsScroller.ScrollTo(dataView.gameObject.transform);
+
+            // Animate.
+            ItemsScroller.ScrollTo(dataView.transform);
         }
 
         void IInputHandler.HandleInput(InputActionEvent action)
