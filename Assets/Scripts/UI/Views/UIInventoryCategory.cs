@@ -16,7 +16,7 @@ namespace UI
         protected override void OnDefault()
         {
             base.OnDefault();
-            Name.color = Color.grey;
+            Name.color = new Color(0.4f, 0.4f, 0.4f);
         }
 
         protected override void OnHighlight()
@@ -28,7 +28,7 @@ namespace UI
         protected override void OnSelect()
         {
             base.OnSelect();
-            Name.color = Color.blue;
+            Name.color = new Color(0.7f, 0.7f, 0.7f);
         }
     }
 }

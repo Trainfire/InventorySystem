@@ -11,7 +11,6 @@ namespace UI
         public ControlList ControlList;
         public UIDataViewList Categories;
         public GameObject ItemsPanel;
-        public AnimatorScroller ItemsScroller;
         public UIDataViewList Items;
         public UIItemPreview ItemPreview;
 
@@ -33,9 +32,6 @@ namespace UI
             navigation.Register(Items);
             navigation.Focused += Navigation_FocusedChanged;
 
-            // Animates the item panel.
-            ItemsScroller = Items.gameObject.AddComponent<AnimatorScroller>();
-
             // Register for input.
             InputManager.RegisterHandler(this);
 
@@ -46,6 +42,8 @@ namespace UI
                 view.Initialize(category);
                 view.SelectedData += Category_Selected;
             }
+
+            Categories.Highlight();
         }
 
         private void Category_Selected(UIDataViewSelectable<CategoryType> dataView)
@@ -115,9 +113,6 @@ namespace UI
 
             // Update preview.
             ItemPreview.SetData(dataView.Data);
-
-            // Animate.
-            ItemsScroller.ScrollTo(dataView.transform);
         }
 
         void IInputHandler.HandleInput(InputActionEvent action)
