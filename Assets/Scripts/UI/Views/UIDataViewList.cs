@@ -84,9 +84,40 @@ namespace UI
             items[index].Highlight();
         }
 
+        public void Highlight()
+        {
+            Highlight(index);
+        }
+
+        public void Highlight(int index)
+        {
+            if (index < 0 || index > items.Count - 1)
+            {
+                Debug.LogError("Index is out of range.");
+            }
+            else
+            {
+                this.index = index;
+                items[index].Highlight();
+            }
+        }
+
         public void Select()
         {
-            items[index].Select();
+            Select(index);
+        }
+
+        public void Select(int index)
+        {
+            if (index < 0 || index > items.Count - 1)
+            {
+                Debug.LogError("Index is out of range.");
+            }
+            else
+            {
+                this.index = index;
+                items[index].Select();
+            }
         }
 
         void Cycle(int direction)

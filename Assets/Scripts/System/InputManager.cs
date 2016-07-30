@@ -1,4 +1,4 @@
-﻿using UnityEngine;
+using UnityEngine;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -13,6 +13,10 @@ namespace InputSystem
         Back,
         Interact,
         Inventory,
+        Up,
+        Right,
+        Down,
+        Left,
     }
 
     // The type of action
@@ -129,6 +133,10 @@ namespace InputSystem
             AddBinding(InputAction.Inventory, KeyCode.Tab);
             AddBinding(InputAction.Back, KeyCode.Backspace);
             AddBinding(InputAction.Interact, KeyCode.E);
+            AddBinding(InputAction.Up, KeyCode.UpArrow);
+            AddBinding(InputAction.Right, KeyCode.RightArrow);
+            AddBinding(InputAction.Down, KeyCode.DownArrow);
+            AddBinding(InputAction.Left, KeyCode.LeftArrow);
         }
 
         public void AddBinding(InputAction action, KeyCode key)

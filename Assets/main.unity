@@ -516,7 +516,7 @@ GameObject:
   m_Component:
   - 224: {fileID: 1196174957}
   - 222: {fileID: 1196174959}
-  - 114: {fileID: 1196174960}
+  - 114: {fileID: 1196174958}
   m_Layer: 0
   m_Name: Inventory
   m_TagString: Untagged
@@ -543,13 +543,7 @@ RectTransform:
   m_AnchoredPosition: {x: 50, y: 0}
   m_SizeDelta: {x: 200, y: 0}
   m_Pivot: {x: 0, y: 0.5}
---- !u!222 &1196174959
-CanvasRenderer:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 1196174956}
---- !u!114 &1196174960
+--- !u!114 &1196174958
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_PrefabParentObject: {fileID: 0}
@@ -562,6 +556,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Categories: {fileID: 948357266}
   Items: {fileID: 79405918}
+--- !u!222 &1196174959
+CanvasRenderer:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1196174956}
 --- !u!1 &1655280253
 GameObject:
   m_ObjectHideFlags: 0
@@ -659,6 +659,7 @@ GameObject:
   - 223: {fileID: 2097723405}
   - 114: {fileID: 2097723404}
   - 114: {fileID: 2097723407}
+  - 114: {fileID: 2097723408}
   m_Layer: 0
   m_Name: Root
   m_TagString: Untagged
@@ -739,3 +740,14 @@ MonoBehaviour:
   m_BlockingMask:
     serializedVersion: 2
     m_Bits: 4294967295
+--- !u!114 &2097723408
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 2097723403}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bf5d42cba4b2a284d80f00b7422de50c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 

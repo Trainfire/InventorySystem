@@ -1,6 +1,16 @@
-﻿using UnityEngine;
+using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
+
+public interface IMonoUpdateReceiver
+{
+    void OnUpdate();
+}
+
+public interface IMonoLateUpdateReceiver
+{
+    void OnLateUpdate();
+}
 
 public class MonoEventRelay : MonoBehaviour
 {

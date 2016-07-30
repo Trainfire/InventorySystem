@@ -11,6 +11,26 @@ namespace UI
         public event Action<UIDataViewSelectable> Defaulted;
         public event Action<UIDataViewSelectable> Highlighted;
         public event Action<UIDataViewSelectable> Selected;
+        public event Action<DataViewSelectableEvent> StateChanged;
+
+        public class DataViewSelectableEvent : EventArgs
+        {
+            public State State { get; private set; }
+            public UIDataViewSelectable View { get; private set; }
+            
+            public DataViewSelectableEvent(UIDataViewSelectable view, State state)
+            {
+                View = view;
+                State = state;
+            }
+        }
+
+        public enum State
+        {
+            Default,
+            Highlighted,
+            Selected,
+        }
 
         public bool IsSelected { get; private set; }
 
