@@ -1,11 +1,13 @@
 using UnityEngine;
 using System.Collections;
 using Models;
+using InputSystem;
 
 namespace UI
 {
     public class InventoryController : MonoBehaviour
     {
+        public ControlList ControlList;
         public UIDataViewList Categories;
         public UIDataViewList Items;
         public UIItemPreview ItemPreview;
@@ -49,6 +51,8 @@ namespace UI
 
         private void Navigation_OnFocus(UIDataViewList dataViewList)
         {
+            ControlList.Clear();
+
             // Select the first item when the Items list is focused.
             if (dataViewList == Items)
             {
@@ -56,6 +60,10 @@ namespace UI
                 Items.gameObject.SetActive(true);
                 Items.Highlight(0);
                 ItemPreview.gameObject.SetActive(true);
+
+                // Display controls.
+                ControlList.AddControl(new ControlData(InputAction.Equip, "Equip"));
+                ControlList.AddControl(new ControlData(InputAction.Drop, "Drop"));
             }
 
             if (dataViewList == Categories)

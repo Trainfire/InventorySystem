@@ -17,6 +17,8 @@ namespace InputSystem
         Right,
         Down,
         Left,
+        Equip,
+        Drop,
     }
 
     // The type of action
