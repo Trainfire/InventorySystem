@@ -91,28 +91,28 @@ namespace UI
         {
             ResetAll();
             Cycle(-1);
-            items[index].Highlight();
+            Highlight();
         }
 
         public void Next()
         {
             ResetAll();
             Cycle(1);
-            items[index].Highlight();
+            Highlight();
         }
 
         public void JumpToStart()
         {
             ResetAll();
             index = 0;
-            items[index].Highlight();
+            Highlight();
         }
 
         public void JumpToEnd()
         {
             ResetAll();
             index = items.Count - 1;
-            items[index].Highlight();
+            Highlight();
         }
 
         public void Highlight()
@@ -125,7 +125,7 @@ namespace UI
             if (items.Count == 0)
                 return;
 
-            if (index < 0 || index > items.Count - 1)
+            if (!items.InRange(index))
             {
                 Debug.LogError("Index is out of range.");
             }
@@ -143,7 +143,7 @@ namespace UI
 
         public void Select(int index)
         {
-            if (index < 0 || index > items.Count - 1)
+            if (!items.InRange(index))
             {
                 Debug.LogError("Index is out of range.");
             }
@@ -152,6 +152,11 @@ namespace UI
                 this.index = index;
                 items[index].Select();
             }
+        }
+
+        public void ResetAll()
+        {
+            items.ForEach(x => x.Default());
         }
 
         void Cycle(int direction)
@@ -178,11 +183,6 @@ namespace UI
                     index--;
                 }
             }
-        }
-
-        public void ResetAll()
-        {
-            items.ForEach(x => x.Default());
         }
     }
 }
