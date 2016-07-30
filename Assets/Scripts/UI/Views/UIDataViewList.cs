@@ -11,6 +11,8 @@ namespace UI
     {
         public UIDataViewSelectable Prototype;
 
+        public int Count { get { return items.Count; } }
+
         private List<UIDataViewSelectable> items;
         private int index;
 
@@ -37,9 +39,39 @@ namespace UI
             return instance;
         }
 
+        public void RemoveItem(UIDataViewSelectable item)
+        {
+            if (item == null)
+                return;
+
+            if (!items.Contains(item))
+            {
+                Debug.LogWarningFormat("Item '{0}' does not exist in this list.", item.name);
+                return;
+            }
+
+            bool isEnd = items.IndexOf(item) == items.Count - 1;
+
+            Destroy(item.gameObject);
+            items.Remove(item);
+
+            if (items.Count != 0)
+            {
+                // If we remove the last item, jump to the end of the resized list.
+                if (isEnd)
+                {
+                    JumpToEnd();
+                }
+                else
+                {
+                    Highlight();
+                }
+            }
+        }
+
         public void Clear()
         {
-            items.ForEach(x => x.Remove());
+            items.ForEach(x => Destroy(x.gameObject));
             items.Clear();
         }
 
@@ -90,6 +122,9 @@ namespace UI
 
         public void Highlight(int index)
         {
+            if (items.Count == 0)
+                return;
+
             if (index < 0 || index > items.Count - 1)
             {
                 Debug.LogError("Index is out of range.");

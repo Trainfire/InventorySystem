@@ -184,6 +184,7 @@ namespace InputSystem
             AddBinding(InputAction.Right, KeyCode.RightArrow);
             AddBinding(InputAction.Down, KeyCode.DownArrow);
             AddBinding(InputAction.Left, KeyCode.LeftArrow);
+            AddBinding(InputAction.Drop, KeyCode.Delete);
         }
 
         public void AddBinding(InputAction action, KeyCode key)

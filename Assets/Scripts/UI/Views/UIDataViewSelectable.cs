@@ -39,6 +39,12 @@ namespace UI
             OnDefault();
         }
 
+        public virtual void OnDestroy()
+        {
+            if (Removed != null)
+                Removed(this);
+        }
+
         public void Default()
         {
             if (Defaulted != null)
@@ -65,14 +71,6 @@ namespace UI
                 Highlighted(this);
 
             OnHighlight();
-        }
-
-        public void Remove()
-        {
-            if (Removed != null)
-                Removed(this);
-
-            Destroy(gameObject);
         }
 
         void IPointerExitHandler.OnPointerExit(PointerEventData eventData)
@@ -133,5 +131,13 @@ namespace UI
         }
 
         public virtual void OnInitialize(TData data) { }
+
+        public override void OnDestroy()
+        {
+            base.OnDestroy();
+
+            if (RemovedData != null)
+                RemovedData(this);
+        }
     }
 }
