@@ -1,6 +1,7 @@
 using UnityEngine;
 using System;
 using System.Collections.Generic;
+using UnityEngine.Events;
 
 namespace UI
 {
@@ -9,6 +10,10 @@ namespace UI
     /// </summary>
     public class UIDataViewList : MonoBehaviour
     {
+        public event UnityAction<UIDataViewSelectable> MovePrevious;
+        public event UnityAction<UIDataViewSelectable> MoveNext;
+        public event UnityAction<UIDataViewSelectable> Highlighted;
+
         public UIDataViewSelectable Prototype;
 
         public int Count { get { return items.Count; } }
@@ -92,6 +97,9 @@ namespace UI
             ResetAll();
             Cycle(-1);
             Highlight();
+
+            if (MovePrevious != null && items.Count != 0)
+                MovePrevious(items[index]);
         }
 
         public void Next()
@@ -99,6 +107,9 @@ namespace UI
             ResetAll();
             Cycle(1);
             Highlight();
+
+            if (MoveNext != null && items.Count != 0)
+                MoveNext(items[index]);
         }
 
         public void JumpToStart()
@@ -133,6 +144,9 @@ namespace UI
             {
                 this.index = index;
                 items[index].Highlight();
+
+                if (Highlighted != null)
+                    Highlighted(items[index]);
             }
         }
 

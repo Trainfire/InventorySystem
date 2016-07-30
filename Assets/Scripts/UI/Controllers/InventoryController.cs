@@ -10,6 +10,8 @@ namespace UI
     {
         public ControlList ControlList;
         public UIDataViewList Categories;
+        public GameObject ItemsPanel;
+        public AnimatorScroller ItemsScroller;
         public UIDataViewList Items;
         public UIItemPreview ItemPreview;
 
@@ -21,13 +23,15 @@ namespace UI
         {
             inventory = game.Data.Inventory;
 
-            Items.gameObject.SetActive(false);
+            ItemsPanel.gameObject.SetActive(false);
             ItemPreview.gameObject.SetActive(false);
 
             navigation = gameObject.AddComponent<ListNavigation>();
             navigation.Register(Categories);
             navigation.Register(Items);
             navigation.Focused += Navigation_FocusedChanged;
+
+            ItemsScroller = Items.gameObject.AddComponent<AnimatorScroller>();
 
             InputManager.RegisterHandler(this);
 
@@ -63,7 +67,7 @@ namespace UI
                 // Mark the currently highlighted category as Selected.
                 Categories.Select();
 
-                Items.gameObject.SetActive(true);
+                ItemsPanel.gameObject.SetActive(true);
 
                 if (Items.Count != 0)
                 {
@@ -79,7 +83,7 @@ namespace UI
             if (dataViewList == Categories)
             {
                 Categories.Highlight();
-                Items.gameObject.SetActive(false);
+                ItemsPanel.gameObject.SetActive(false);
                 Items.ResetAll();
                 ItemPreview.gameObject.SetActive(false);
                 currentItemView = null;
@@ -101,6 +105,7 @@ namespace UI
         {
             currentItemView = dataView;
             ItemPreview.SetData(dataView.Data);
+            ItemsScroller.ScrollTo(dataView.gameObject.transform);
         }
 
         void IInputHandler.HandleInput(InputActionEvent action)

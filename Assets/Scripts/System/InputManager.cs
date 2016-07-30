@@ -120,7 +120,7 @@ namespace InputSystem
         private float holdRepeatTimestamp;
 
         private const float HoldActivateDelay = 0.5f;
-        private const float HoldRepeatDelay = 0.1f;
+        private const float HoldRepeatDelay = 0.05f;
 
         public InputHoldBehaviour(InputAction trigger)
         {

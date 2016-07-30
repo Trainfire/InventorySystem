@@ -1,4 +1,4 @@
-﻿using UnityEngine;
+using UnityEngine;
 using UnityEngine.UI;
 
 namespace UI
@@ -16,7 +16,6 @@ namespace UI
         protected override void OnDefault()
         {
             base.OnDefault();
-            Debug.Log("Defaulting...");
             Name.color = Color.grey;
         }
 

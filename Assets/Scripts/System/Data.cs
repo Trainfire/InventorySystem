@@ -13,7 +13,7 @@ public class Data
     {
         var mockData = new InventoryData();
 
-        for (int i = 0; i < 5; i++)
+        for (int i = 0; i < 30; i++)
         {
             mockData.AddItem(new ItemData()
             {
