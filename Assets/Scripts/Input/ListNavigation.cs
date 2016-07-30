@@ -6,18 +6,26 @@ using System;
 using UI;
 using UnityEngine.Events;
 
-public class ListNavigation : IInputHandler
+public class ListNavigation : MonoBehaviour, IInputHandler
 {
     public event UnityAction<UIDataViewList> Focused;
 
+    private InputHoldBehaviour holdBehaviourDown;
+    private InputHoldBehaviour holdBehaviourUp;
     private List<UIDataViewList> lists;
     private int index;
 
-    public ListNavigation(InputManager inputManager)
+    public void Awake()
     {
         lists = new List<UIDataViewList>();
 
-        inputManager.RegisterHandler(this);
+        holdBehaviourDown = new InputHoldBehaviour(InputAction.Down);
+        holdBehaviourDown.OnTrigger += HoldBehaviourDown_OnTrigger;
+
+        holdBehaviourUp = new InputHoldBehaviour(InputAction.Up);
+        holdBehaviourUp.OnTrigger += HoldBehaviourUp_OnTrigger;
+
+        InputManager.RegisterHandler(this);
     }
 
     public void Register(UIDataViewList list)
@@ -98,7 +106,17 @@ public class ListNavigation : IInputHandler
         }
     }
 
-    void FocusPrev()
+    private void HoldBehaviourUp_OnTrigger()
+    {
+        lists[index].Prev();
+    }
+
+    private void HoldBehaviourDown_OnTrigger()
+    {
+        lists[index].Next();
+    }
+
+    private void FocusPrev()
     {
         if ((index - 1) >= 0)
         {
@@ -107,12 +125,21 @@ public class ListNavigation : IInputHandler
         }
     }
 
-    void FocusNext()
+    private void FocusNext()
     {
         if ((index + 1) < lists.Count)
         {
             index++;
             Focus(index);
         }
+    }
+
+    public void OnDestroy()
+    {
+        holdBehaviourDown.OnTrigger -= HoldBehaviourDown_OnTrigger;
+        holdBehaviourUp.OnTrigger -= HoldBehaviourUp_OnTrigger;
+
+        holdBehaviourDown.Destroy();
+        holdBehaviourUp.Destroy();
     }
 }

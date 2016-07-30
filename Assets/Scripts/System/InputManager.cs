@@ -33,19 +33,6 @@ namespace InputSystem
         void HandleInput(InputActionEvent action);
     }
 
-    public class InputTest : IInputHandler
-    {
-        public InputTest(Game game)
-        {
-            game.InputManager.RegisterHandler(this);
-        }
-
-        void IInputHandler.HandleInput(InputActionEvent action)
-        {
-            Debug.LogFormat("Received InputActionEvent: Action {0}, Type {1}", action.Action, action.Type);
-        }
-    }
-
     public class InputActionEvent : EventArgs
     {
         public InputAction Action { get; private set; }
@@ -61,7 +48,7 @@ namespace InputSystem
     // Handles input from an input map and relays to a handler
     public class InputManager
     {
-        private List<IInputHandler> handlers;
+        private static List<IInputHandler> handlers;
         private List<InputMap> maps;
 
         public InputManager()
@@ -70,13 +57,13 @@ namespace InputSystem
             maps = new List<InputMap>();
         }
 
-        public void RegisterHandler(IInputHandler handler)
+        public static void RegisterHandler(IInputHandler handler)
         {
             if (!handlers.Contains(handler))
                 handlers.Add(handler);
         }
 
-        public void UnregisterHandler(IInputHandler handler)
+        public static void UnregisterHandler(IInputHandler handler)
         {
             if (handlers.Contains(handler))
                 handlers.Remove(handler);
@@ -115,6 +102,64 @@ namespace InputSystem
         {
             if (Trigger != null)
                 Trigger(this, actionEvent);
+        }
+    }
+
+    /// <summary>
+    /// Adds a repeat behaviour for when a button is held down. When the button is held down and after an initial delay, OnTrigger will be invoked repeatedly with a delay between each call.
+    /// </summary>
+    public class InputHoldBehaviour : IInputHandler
+    {
+        public event Action OnTrigger;
+
+        private InputAction trigger;
+        private bool buttonDown;
+        private float buttonDownTimestamp;
+        private float holdRepeatTimestamp;
+
+        private const float HoldActivateDelay = 0.5f;
+        private const float HoldRepeatDelay = 0.1f;
+
+        public InputHoldBehaviour(InputAction trigger)
+        {
+            this.trigger = trigger;
+
+            InputManager.RegisterHandler(this);
+        }
+
+        void IInputHandler.HandleInput(InputActionEvent action)
+        {
+            if (action.Type == InputActionType.Held && action.Action == trigger)
+            {
+                if (!buttonDown)
+                {
+                    buttonDown = true;
+                    buttonDownTimestamp = Time.realtimeSinceStartup;
+                }
+
+                var time = Time.realtimeSinceStartup;
+
+                if (time > buttonDownTimestamp + HoldActivateDelay)
+                {
+                    if (time > holdRepeatTimestamp + HoldRepeatDelay)
+                    {
+                        if (OnTrigger != null)
+                            OnTrigger();
+
+                        holdRepeatTimestamp = Time.realtimeSinceStartup;
+                    }
+                }
+            }
+            else
+            {
+                buttonDown = false;
+            }
+        }
+
+        public void Destroy()
+        {
+            InputManager.UnregisterHandler(this);
+            OnTrigger = null;
         }
     }
 

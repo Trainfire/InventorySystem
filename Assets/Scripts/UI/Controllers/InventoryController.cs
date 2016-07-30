@@ -18,9 +18,10 @@ namespace UI
         {
             inventory = game.Data.Inventory;
 
+            Items.gameObject.SetActive(false);
             ItemPreview.gameObject.SetActive(false);
 
-            navigation = new ListNavigation(game.InputManager);
+            navigation = gameObject.AddComponent<ListNavigation>();
             navigation.Register(Categories);
             navigation.Register(Items);
             navigation.Focused += Navigation_OnFocus;
@@ -52,6 +53,7 @@ namespace UI
             if (dataViewList == Items)
             {
                 Categories.Select();
+                Items.gameObject.SetActive(true);
                 Items.Highlight(0);
                 ItemPreview.gameObject.SetActive(true);
             }
@@ -59,6 +61,7 @@ namespace UI
             if (dataViewList == Categories)
             {
                 Categories.Highlight();
+                Items.gameObject.SetActive(false);
                 Items.ResetAll();
                 ItemPreview.gameObject.SetActive(false);
             }
