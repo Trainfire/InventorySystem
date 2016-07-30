@@ -17,25 +17,25 @@ public class Data
         {
             mockData.AddItem(new ItemData()
             {
-                Name = "Apple",
+                Name = "Apple " + i,
                 Category = CategoryType.Consumable,
             });
 
             mockData.AddItem(new ItemData()
             {
-                Name = "Mighty Sword",
+                Name = "Mighty Sword " + i,
                 Category = CategoryType.Weapon,
             });
 
             mockData.AddItem(new ItemData()
             {
-                Name = "Old Hat",
+                Name = "Old Hat " + i,
                 Category = CategoryType.Misc,
             });
 
             mockData.AddItem(new ItemData()
             {
-                Name = "Dapper Bowtie",
+                Name = "Dapper Bowtie " + i,
                 Category = CategoryType.Cosmetic,
             });
         }

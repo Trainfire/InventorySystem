@@ -8,6 +8,7 @@ namespace UI
     {
         public UIDataViewList Categories;
         public UIDataViewList Items;
+        public UIItemPreview ItemPreview;
 
         private ListNavigation navigation;
         private InventoryData inventory;
@@ -15,34 +16,24 @@ namespace UI
 
         public void Initialize(Game game)
         {
+            inventory = game.Data.Inventory;
+
+            ItemPreview.gameObject.SetActive(false);
+
             navigation = new ListNavigation(game.InputManager);
             navigation.Register(Categories);
             navigation.Register(Items);
-
             navigation.Focused += Navigation_OnFocus;
-
-            inventory = game.Data.Inventory;
 
             foreach (var category in inventory.GetCategories())
             {
                 var view = Categories.AddItem<UIInventoryCategory>();
                 view.Initialize(category);
-                view.HighlightedData += Category_Highlighted;
+                view.SelectedData += Category_Selected;
             }
         }
 
-        private void Navigation_OnFocus(UIDataViewList dataViewList)
-        {
-            // Select the first item when the Items list is focused.
-            if (dataViewList == Items)
-                Items.Highlight(0);
-        }
-
-        /// <summary>
-        /// Temporary until we can tell whether where using mouse input or control-based input.
-        /// </summary>
-        /// <param name="dataView"></param>
-        private void Category_Highlighted(UIDataViewSelectable<CategoryType> dataView)
+        private void Category_Selected(UIDataViewSelectable<CategoryType> dataView)
         {
             Items.Clear();
 
@@ -55,6 +46,24 @@ namespace UI
             }
         }
 
+        private void Navigation_OnFocus(UIDataViewList dataViewList)
+        {
+            // Select the first item when the Items list is focused.
+            if (dataViewList == Items)
+            {
+                Categories.Select();
+                Items.Highlight(0);
+                ItemPreview.gameObject.SetActive(true);
+            }
+
+            if (dataViewList == Categories)
+            {
+                Categories.Highlight();
+                Items.ResetAll();
+                ItemPreview.gameObject.SetActive(false);
+            }
+        }
+
         private void Item_Removed(UIDataViewSelectable<ItemData> dataView)
         {
             // Cleanup on remove.
@@ -63,8 +72,8 @@ namespace UI
 
         private void Item_Highlighted(UIDataViewSelectable<ItemData> dataView)
         {
-            // TODO: Update the item preview here.
             currentItem = dataView.Data;
+            ItemPreview.SetData(currentItem);
         }
     }
 }

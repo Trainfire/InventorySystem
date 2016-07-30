@@ -146,7 +146,7 @@ namespace UI
             }
         }
 
-        void ResetAll()
+        public void ResetAll()
         {
             items.ForEach(x => x.Default());
         }
