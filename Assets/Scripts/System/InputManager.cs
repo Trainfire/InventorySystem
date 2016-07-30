@@ -19,6 +19,10 @@ namespace InputSystem
         Left,
         Equip,
         Drop,
+        ScrollUp, // TODO: Feels like these should be axis-based actions
+        ScrollDown,
+        MouseLeft,
+        MouseRight,
     }
 
     // The type of action
@@ -224,6 +228,22 @@ namespace InputSystem
                     FireTrigger(e);
                 }
             }
+
+            if (Input.GetAxis("Mouse ScrollWheel") > 0f)
+            {
+                FireTrigger(new InputActionEvent(InputAction.ScrollUp, InputActionType.Down));
+            }
+
+            if (Input.GetAxis("Mouse ScrollWheel") < 0f)
+            {
+                FireTrigger(new InputActionEvent(InputAction.ScrollDown, InputActionType.Down));
+            }
+
+            if (Input.GetMouseButtonDown(0))
+                FireTrigger(new InputActionEvent(InputAction.MouseLeft, InputActionType.Down));
+
+            if (Input.GetMouseButtonDown(1))
+                FireTrigger(new InputActionEvent(InputAction.MouseRight, InputActionType.Down));
         }
     }
 }

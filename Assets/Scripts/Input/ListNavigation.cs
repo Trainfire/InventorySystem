@@ -94,10 +94,22 @@ public class ListNavigation : MonoBehaviour, IInputHandler
                 case InputAction.Down:
                     lists[index].Next();
                     break;
+                case InputAction.ScrollUp:
+                    lists[index].Prev();
+                    break;
+                case InputAction.ScrollDown:
+                    lists[index].Next();
+                    break;
                 case InputAction.Right:
                     FocusNext();
                     break;
                 case InputAction.Left:
+                    FocusPrev();
+                    break;
+                case InputAction.MouseLeft:
+                    FocusNext();
+                    break;
+                case InputAction.MouseRight:
                     FocusPrev();
                     break;
                 default:

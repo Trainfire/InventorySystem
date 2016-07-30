@@ -79,7 +79,7 @@ namespace UI
                     Items.Highlight(0);
                     ItemPreview.gameObject.SetActive(true);
                 }
-                
+
                 // Display controls.
                 ControlList.AddControl(new ControlData(InputAction.Equip, "Equip"));
                 ControlList.AddControl(new ControlData(InputAction.Drop, "Drop"));
