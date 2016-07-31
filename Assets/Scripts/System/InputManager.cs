@@ -52,12 +52,12 @@ namespace InputSystem
     }
 
     // Handles input from an input map and relays to a handler
-    public class InputManager
+    public static class InputManager
     {
         private static List<IInputHandler> handlers;
-        private List<InputMap> maps;
+        private static List<InputMap> maps;
 
-        public InputManager()
+        static InputManager()
         {
             handlers = new List<IInputHandler>();
             maps = new List<InputMap>();
@@ -75,7 +75,7 @@ namespace InputSystem
                 handlers.Remove(handler);
         }
 
-        public void RegisterMap(InputMap inputMap)
+        public static void RegisterMap(InputMap inputMap)
         {
             if (!maps.Contains(inputMap))
             {
@@ -84,7 +84,7 @@ namespace InputSystem
             }
         }
 
-        public void UnregisterMap(InputMap inputMap)
+        public static void UnregisterMap(InputMap inputMap)
         {
             if (maps.Contains(inputMap))
             {
@@ -93,7 +93,7 @@ namespace InputSystem
             }
         }
 
-        void Relay(object sender, InputActionEvent action)
+        static void Relay(object sender, InputActionEvent action)
         {
             handlers.ForEach(x => x.HandleInput(action));
         }

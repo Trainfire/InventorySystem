@@ -9,13 +9,14 @@ using UnityEngine.Events;
 public class ListNavigation : MonoBehaviour, IInputHandler
 {
     public event UnityAction<UIDataViewList> Focused;
+    public event UnityAction<UIDataViewList> Unfocused;
 
     private InputHoldBehaviour holdBehaviourDown;
     private InputHoldBehaviour holdBehaviourUp;
     private List<UIDataViewList> lists;
     private int index;
 
-    public void Awake()
+    public void Start()
     {
         lists = new List<UIDataViewList>();
 
@@ -73,9 +74,21 @@ public class ListNavigation : MonoBehaviour, IInputHandler
         }
         else
         {
+            if (Unfocused != null)
+                Unfocused(lists[this.index]);
+
+            var focusable = lists[this.index].GetComponent<Focusable>();
+            if (focusable != null)
+                focusable.Unfocus();
+
             this.index = index;
+
+            focusable = lists[this.index].GetComponent<Focusable>();
+            if (focusable != null)
+                focusable.Focus();
+
             if (Focused != null)
-                Focused(lists[index]);
+                Focused(lists[this.index]);
         }
     }
 
@@ -132,8 +145,8 @@ public class ListNavigation : MonoBehaviour, IInputHandler
     {
         if ((index - 1) >= 0)
         {
-            index--;
-            Focus(index);
+            int nextIndex = index - 1;
+            Focus(nextIndex);
         }
     }
 
@@ -141,8 +154,8 @@ public class ListNavigation : MonoBehaviour, IInputHandler
     {
         if ((index + 1) < lists.Count)
         {
-            index++;
-            Focus(index);
+            int nextIndex = index + 1;
+            Focus(nextIndex);
         }
     }
 

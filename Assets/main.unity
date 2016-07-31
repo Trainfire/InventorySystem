@@ -1839,6 +1839,7 @@ GameObject:
   - 114: {fileID: 523595191}
   - 114: {fileID: 523595190}
   - 114: {fileID: 523595189}
+  - 114: {fileID: 523595194}
   m_Layer: 5
   m_Name: Items
   m_TagString: Untagged
@@ -1926,6 +1927,65 @@ CanvasRenderer:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 523595187}
+--- !u!114 &523595194
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 523595187}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5de09dc17cc4307438f683a844b78724, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  OnAwake:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 1928743405}
+        m_MethodName: SetActive
+        m_Mode: 6
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+    m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine, Version=0.0.0.0, Culture=neutral,
+      PublicKeyToken=null
+  Focused:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 1928743405}
+        m_MethodName: SetActive
+        m_Mode: 6
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 1
+        m_CallState: 2
+    m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine, Version=0.0.0.0, Culture=neutral,
+      PublicKeyToken=null
+  Unfocused:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 1928743405}
+        m_MethodName: SetActive
+        m_Mode: 6
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+    m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine, Version=0.0.0.0, Culture=neutral,
+      PublicKeyToken=null
 --- !u!1 &582577718
 GameObject:
   m_ObjectHideFlags: 0
@@ -2436,6 +2496,7 @@ GameObject:
   - 114: {fileID: 948357268}
   - 114: {fileID: 948357266}
   - 114: {fileID: 948357270}
+  - 114: {fileID: 948357271}
   m_Layer: 5
   m_Name: CategoriesItems
   m_TagString: Untagged
@@ -2523,6 +2584,65 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 527c6bccecbec644db3ed9e036e88aae, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &948357271
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 948357264}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5de09dc17cc4307438f683a844b78724, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  OnAwake:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 239953768}
+        m_MethodName: SetActive
+        m_Mode: 6
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+    m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine, Version=0.0.0.0, Culture=neutral,
+      PublicKeyToken=null
+  Focused:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 239953768}
+        m_MethodName: SetActive
+        m_Mode: 6
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 1
+        m_CallState: 2
+    m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine, Version=0.0.0.0, Culture=neutral,
+      PublicKeyToken=null
+  Unfocused:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 239953768}
+        m_MethodName: SetActive
+        m_Mode: 6
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+    m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine, Version=0.0.0.0, Culture=neutral,
+      PublicKeyToken=null
 --- !u!1 &1006351145
 GameObject:
   m_ObjectHideFlags: 0
@@ -2829,6 +2949,7 @@ GameObject:
   - 224: {fileID: 1196174957}
   - 222: {fileID: 1196174959}
   - 114: {fileID: 1196174958}
+  - 114: {fileID: 1196174961}
   m_Layer: 5
   m_Name: Inventory
   m_TagString: Untagged
@@ -2871,7 +2992,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   ControlList: {fileID: 57533129}
   Categories: {fileID: 948357266}
-  ItemsPanel: {fileID: 482036248}
   Items: {fileID: 523595190}
   ItemPreview: {fileID: 1187110182}
 --- !u!222 &1196174959
@@ -2880,6 +3000,17 @@ CanvasRenderer:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1196174956}
+--- !u!114 &1196174961
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1196174956}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8ffa9bfd57a9e444c92283be98afaaa6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1287077106
 GameObject:
   m_ObjectHideFlags: 0

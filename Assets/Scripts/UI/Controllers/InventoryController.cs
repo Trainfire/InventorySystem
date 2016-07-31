@@ -10,7 +10,6 @@ namespace UI
     {
         public ControlList ControlList;
         public UIDataViewList Categories;
-        public GameObject ItemsPanel;
         public UIDataViewList Items;
         public UIItemPreview ItemPreview;
 
@@ -27,11 +26,8 @@ namespace UI
             holdDropBehaviour = new InputHoldBehaviour(InputAction.Drop);
             holdDropBehaviour.OnTrigger += HoldDropBehaviour_OnTrigger;
 
-            ItemsPanel.gameObject.SetActive(false);
-            ItemPreview.gameObject.SetActive(false);
-
             // Handles navigation between the Category and Items panel.
-            navigation = gameObject.AddComponent<ListNavigation>();
+            navigation = gameObject.GetComponent<ListNavigation>();
             navigation.Register(Categories);
             navigation.Register(Items);
             navigation.Focused += Navigation_FocusedChanged;
@@ -47,7 +43,11 @@ namespace UI
                 view.SelectedData += Category_Selected;
             }
 
+            // Focus on Categories by default and show items from the first category.
+            navigation.Focus(Categories);
+            Categories.Select();
             Categories.Highlight();
+            Items.Highlight();
         }
 
         private void Category_Selected(UIDataViewSelectable<CategoryType> dataView)
@@ -75,14 +75,9 @@ namespace UI
                 // Mark the currently highlighted category as Selected.
                 Categories.Select();
 
-                ItemsPanel.gameObject.SetActive(true);
-
                 // Highlight first item by default.
                 if (Items.Count != 0)
-                {
                     Items.Highlight(0);
-                    ItemPreview.gameObject.SetActive(true);
-                }
 
                 // Display controls.
                 ControlList.AddControl(new ControlData(InputAction.Equip, "Equip"));
@@ -90,14 +85,7 @@ namespace UI
             }
 
             if (dataViewList == Categories)
-            {
                 Categories.Highlight();
-
-                ItemsPanel.gameObject.SetActive(false);
-                ItemPreview.gameObject.SetActive(false);
-
-                currentItemView = null;
-            }
         }
 
         private void Item_Removed(UIDataViewSelectable<ItemData> dataView)
