@@ -10,7 +10,7 @@ namespace UI
         public override void OnInitialize(CategoryType data)
         {
             base.OnInitialize(data);
-            Name.text = data.ToString().ToUpper();
+            Name.text = data.ToString();
         }
 
         protected override void OnDefault()
