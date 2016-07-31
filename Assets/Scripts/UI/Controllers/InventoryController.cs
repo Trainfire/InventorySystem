@@ -17,11 +17,15 @@ namespace UI
         private ListNavigation navigation;
         private InventoryData inventory;
         private UIDataViewSelectable<ItemData> currentItemView;
+        private InputHoldBehaviour holdDropBehaviour;
 
         public void Initialize(Game game)
         {
             // Get inventory.
             inventory = game.Data.Inventory;
+
+            holdDropBehaviour = new InputHoldBehaviour(InputAction.Drop);
+            holdDropBehaviour.OnTrigger += HoldDropBehaviour_OnTrigger;
 
             ItemsPanel.gameObject.SetActive(false);
             ItemPreview.gameObject.SetActive(false);
@@ -115,14 +119,24 @@ namespace UI
             ItemPreview.SetData(dataView.Data);
         }
 
-        void IInputHandler.HandleInput(InputActionEvent action)
+        private void HoldDropBehaviour_OnTrigger()
         {
-            // Drop item.
-            if (action.Action == InputAction.Drop && action.Type == InputActionType.Down && currentItemView != null)
+            DropItem();
+        }
+
+        void DropItem()
+        {
+            if (currentItemView != null)
             {
                 inventory.RemoveItem(currentItemView.Data);
                 Items.RemoveItem(currentItemView);
             }
+        }
+
+        void IInputHandler.HandleInput(InputActionEvent action)
+        {
+            if (action.Action == InputAction.Drop && action.Type == InputActionType.Down)
+                DropItem();
         }
     }
 }
