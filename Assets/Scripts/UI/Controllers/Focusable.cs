@@ -1,11 +1,13 @@
 using UnityEngine;
 using UnityEngine.Events;
+using UnityEngine.EventSystems;
 using System.Collections;
+using System;
 
 /// <summary>
 /// Marks a GameObject as focusable and triggers appropriate callbacks.
 /// </summary>
-public class Focusable : MonoBehaviour
+public class Focusable : MonoBehaviour, IPointerEnterHandler
 {
     public UnityEvent OnAwake;
     public UnityEvent Focused;
@@ -24,5 +26,10 @@ public class Focusable : MonoBehaviour
     public void Unfocus()
     {
         Unfocused.Invoke();
+    }
+
+    void IPointerEnterHandler.OnPointerEnter(PointerEventData eventData)
+    {
+        Focused.Invoke();
     }
 }

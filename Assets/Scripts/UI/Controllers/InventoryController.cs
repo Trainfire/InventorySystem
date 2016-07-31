@@ -40,7 +40,7 @@ namespace UI
             {
                 var view = Categories.AddItem<UIInventoryCategory>();
                 view.Initialize(category);
-                view.SelectedData += Category_Selected;
+                view.HighlightedData += Category_Highlighted;
             }
 
             // Focus on Categories by default and show items from the first category.
@@ -50,7 +50,7 @@ namespace UI
             Items.Highlight();
         }
 
-        private void Category_Selected(UIDataViewSelectable<CategoryType> dataView)
+        private void Category_Highlighted(UIDataViewSelectable<CategoryType> dataView)
         {
             // Clear all items once a category is selected before repopulating it with the new items.
             Items.Clear();
@@ -62,6 +62,9 @@ namespace UI
                 view.HighlightedData += Item_Highlighted;
                 view.RemovedData += Item_Removed;
             }
+
+            // Highlight first item.
+            Items.Highlight();
         }
 
         private void Navigation_FocusedChanged(UIDataViewList dataViewList)
@@ -75,9 +78,9 @@ namespace UI
                 // Mark the currently highlighted category as Selected.
                 Categories.Select();
 
-                // Highlight first item by default.
-                if (Items.Count != 0)
-                    Items.Highlight(0);
+                // Highlight the first item.
+                Items.ResetAll();
+                Items.Highlight(0);
 
                 // Display controls.
                 ControlList.AddControl(new ControlData(InputAction.Equip, "Equip"));
