@@ -39,9 +39,14 @@ namespace Framework.UI
             get { return data.Count; }
         }
 
-        public TData Current
+        public TData CurrentData
         {
-            get { return data.Count != 0 ? data[dataIndex] : default(TData); }
+            get { return data.Count != 0 ? data[viewIndex] : default(TData); }
+        }
+
+        public UIDataViewSelectable<TData> CurrentView
+        {
+            get { return views[viewIndex]; }
         }
 
         public DataViewList(UIDataViewList dataView)

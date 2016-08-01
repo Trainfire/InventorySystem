@@ -50,14 +50,45 @@ namespace Models
                 .ToList();
         }
 
-        public List<CategoryType> GetCategories()
+        public CategoryData GetCategory(CategoryType category)
+        {
+            var sampleItem = items.FirstOrDefault(x => x.Category == category);
+            if (sampleItem != null)
+                return new CategoryData(category, GetItemsFromCategory(category).Count);
+            return new CategoryData();
+        }
+
+        public List<CategoryData> GetCategories()
         {
             var categories = items
                 .Select(x => x.Category)
                 .Distinct()
                 .ToList();
 
-            return categories;
+            var categoriesData = new List<CategoryData>();
+            categories.ForEach(x =>
+            {
+                categoriesData.Add(GetCategory(x));
+            });
+
+            return categoriesData;
+        }
+    }
+
+    public class CategoryData
+    {
+        public CategoryType CategoryType { get; private set; }
+        public int ItemCount { get; private set; }
+
+        public CategoryData()
+        {
+
+        }
+
+        public CategoryData(CategoryType categoryType, int itemCount)
+        {
+            CategoryType = categoryType;
+            ItemCount = itemCount;
         }
     }
 }
