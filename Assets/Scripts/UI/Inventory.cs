@@ -6,7 +6,7 @@ using System;
 
 namespace UI
 {
-    public class InventoryController : MonoBehaviour, IInputHandler
+    public class Inventory : MonoBehaviour, IInputHandler
     {
         public ControlList ControlList;
         public UIDataViewList Categories;

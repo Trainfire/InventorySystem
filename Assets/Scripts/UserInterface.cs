@@ -3,11 +3,11 @@ using UI;
 
 public class UserInterface
 {
-    private InventoryController inventory;
+    private Inventory inventory;
 
     public UserInterface(Game game)
     {
-        inventory = Object.FindObjectOfType<InventoryController>();
+        inventory = Object.FindObjectOfType<Inventory>();
         inventory.Initialize(game);
     }
 }

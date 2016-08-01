@@ -1,6 +1,0 @@
-using InputSystem;
-
-namespace Models
-{
-    
-}
