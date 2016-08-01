@@ -2,14 +2,17 @@ using UnityEngine;
 using System.Collections;
 using System;
 
-public class TweenVector : Tween<Vector3>
+namespace Framework
 {
-    public Vector3 Value;
-    public Vector3 From;
-    public Vector3 To;
-
-    protected override Vector3 OnTween(float t)
+    public class TweenVector : Tween<Vector3>
     {
-        return Vector3.Lerp(From, To, t);
+        public Vector3 Value;
+        public Vector3 From;
+        public Vector3 To;
+
+        protected override Vector3 OnTween(float t)
+        {
+            return Vector3.Lerp(From, To, t);
+        }
     }
 }

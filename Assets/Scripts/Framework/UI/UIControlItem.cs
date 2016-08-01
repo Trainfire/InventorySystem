@@ -1,9 +1,12 @@
 using UnityEngine;
 using UnityEngine.UI;
-using InputSystem;
+using Framework;
 
-public class UIControlItem : MonoBehaviour
+namespace Framework.UI
 {
-    public Image Icon;
-    public Text Label;
+    public class UIControlItem : MonoBehaviour
+    {
+        public Image Icon;
+        public Text Label;
+    }
 }

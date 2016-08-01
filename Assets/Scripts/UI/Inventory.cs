@@ -1,10 +1,10 @@
 using UnityEngine;
 using System.Collections;
 using Models;
-using InputSystem;
+using Framework;
 using System;
 
-namespace UI
+namespace Framework.UI
 {
     public class Inventory : MonoBehaviour, IInputHandler
     {

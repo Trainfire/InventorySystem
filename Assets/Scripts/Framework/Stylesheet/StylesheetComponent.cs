@@ -1,7 +1,7 @@
 using UnityEngine;
 using UnityEngine.UI;
 
-namespace Stylesheet
+namespace Framework.Stylesheet
 {
     [ExecuteInEditMode]
     public abstract class StylesheetComponent : MonoBehaviour

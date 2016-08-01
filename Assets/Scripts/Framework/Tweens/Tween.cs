@@ -1,50 +1,53 @@
 using UnityEngine;
 using UnityEngine.Events;
 
-public abstract class Tween<T> : MonoBehaviour
+namespace Framework
 {
-    public UnityAction<T> OnTweenValue;
-    public float Duration;
-
-    public bool DoTween = false;
-
-    bool Tweening { get; set; }
-    float CurrentTime { get; set; }
-    UnityAction OnDone { get; set; }
-
-    public void Play(UnityAction onDone = null)
+    public abstract class Tween<T> : MonoBehaviour
     {
-        CurrentTime = 0f;
-        DoTween = true;
-        OnDone = onDone;
-    }
+        public UnityAction<T> OnTweenValue;
+        public float Duration;
 
-    void Update()
-    {
-        if (DoTween)
+        public bool DoTween = false;
+
+        bool Tweening { get; set; }
+        float CurrentTime { get; set; }
+        UnityAction OnDone { get; set; }
+
+        public void Play(UnityAction onDone = null)
         {
-            DoTween = false;
-            Tweening = true;
             CurrentTime = 0f;
+            DoTween = true;
+            OnDone = onDone;
         }
 
-        if (Tweening)
+        void Update()
         {
-            T value = OnTween(CurrentTime / Duration);
-
-            if (OnTweenValue != null)
-                OnTweenValue(value);
-
-            CurrentTime += Time.deltaTime;
-
-            if (CurrentTime > Duration)
+            if (DoTween)
             {
-                Tweening = false;
-                if (OnDone != null)
-                    OnDone();
+                DoTween = false;
+                Tweening = true;
+                CurrentTime = 0f;
+            }
+
+            if (Tweening)
+            {
+                T value = OnTween(CurrentTime / Duration);
+
+                if (OnTweenValue != null)
+                    OnTweenValue(value);
+
+                CurrentTime += Time.deltaTime;
+
+                if (CurrentTime > Duration)
+                {
+                    Tweening = false;
+                    if (OnDone != null)
+                        OnDone();
+                }
             }
         }
-    }
 
-    protected abstract T OnTween(float delta);
+        protected abstract T OnTween(float delta);
+    }
 }

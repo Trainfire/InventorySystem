@@ -3,7 +3,7 @@ using System;
 using System.Collections.Generic;
 using UnityEngine.Events;
 
-namespace UI
+namespace Framework.UI
 {
     public class UIDataViewList : MonoBehaviour
     {

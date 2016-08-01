@@ -1,7 +1,7 @@
 using UnityEngine;
 using UnityEngine.UI;
 
-namespace UI
+namespace Framework.UI
 {
     public class UIInventoryCategory : UIDataViewSelectable<CategoryType>
     {

@@ -3,7 +3,7 @@ using System.Collections;
 using System;
 using UnityEngine.UI;
 
-namespace Stylesheet
+namespace Framework.Stylesheet
 {
     public class TextComponent : StylesheetComponent
     {

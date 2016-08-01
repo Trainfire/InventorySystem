@@ -2,7 +2,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using Models;
 
-namespace UI
+namespace Framework.UI
 {
     public class UIInventoryItem : UIDataViewSelectable<ItemData>
     {

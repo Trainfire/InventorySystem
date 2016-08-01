@@ -2,7 +2,7 @@ using System;
 using UnityEngine;
 using UnityEngine.UI;
 
-namespace Stylesheet
+namespace Framework.Stylesheet
 {
     [ExecuteInEditMode]
     public class ColorComponent : StylesheetComponent

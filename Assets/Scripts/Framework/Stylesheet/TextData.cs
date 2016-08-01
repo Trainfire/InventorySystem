@@ -1,6 +1,6 @@
 using UnityEngine;
 
-namespace Stylesheet
+namespace Framework.Stylesheet
 {
     public class TextData : ScriptableObject
     {

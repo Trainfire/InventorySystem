@@ -4,32 +4,35 @@ using UnityEngine.EventSystems;
 using System.Collections;
 using System;
 
-/// <summary>
-/// Marks a GameObject as focusable and triggers appropriate callbacks.
-/// </summary>
-public class Focusable : MonoBehaviour, IPointerEnterHandler
+namespace Framework.UI
 {
-    public UnityEvent OnAwake;
-    public UnityEvent Focused;
-    public UnityEvent Unfocused;
-
-    public void Awake()
+    /// <summary>
+    /// Marks a GameObject as focusable and triggers appropriate callbacks.
+    /// </summary>
+    public class Focusable : MonoBehaviour, IPointerEnterHandler
     {
-        OnAwake.Invoke();
-    }
+        public UnityEvent OnAwake;
+        public UnityEvent Focused;
+        public UnityEvent Unfocused;
 
-    public void Focus()
-    {
-        Focused.Invoke();
-    }
+        public void Awake()
+        {
+            OnAwake.Invoke();
+        }
 
-    public void Unfocus()
-    {
-        Unfocused.Invoke();
-    }
+        public void Focus()
+        {
+            Focused.Invoke();
+        }
 
-    void IPointerEnterHandler.OnPointerEnter(PointerEventData eventData)
-    {
-        Focused.Invoke();
+        public void Unfocus()
+        {
+            Unfocused.Invoke();
+        }
+
+        void IPointerEnterHandler.OnPointerEnter(PointerEventData eventData)
+        {
+            Focused.Invoke();
+        }
     }
 }

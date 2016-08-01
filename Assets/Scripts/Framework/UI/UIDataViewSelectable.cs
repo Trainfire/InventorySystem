@@ -2,9 +2,9 @@ using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.EventSystems;
 using System;
-using Stylesheet;
+using Framework.Stylesheet;
 
-namespace UI
+namespace Framework.UI
 {
     public class UIDataViewSelectable : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler, IPointerClickHandler
     {

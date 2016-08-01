@@ -1,7 +1,7 @@
 using System;
 using UnityEngine.UI;
 
-namespace Stylesheet
+namespace Framework.Stylesheet
 {
     public class ElementComponent : StylesheetComponent
     {

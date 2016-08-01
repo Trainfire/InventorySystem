@@ -1,14 +1,17 @@
 using UnityEngine;
 using System;
 
-public class TweenFloat : Tween<float>
+namespace Framework
 {
-    public float Value;
-    public float From;
-    public float To;
-
-    protected override float OnTween(float t)
+    public class TweenFloat : Tween<float>
     {
-        return Mathf.Lerp(From, To, t);
+        public float Value;
+        public float From;
+        public float To;
+
+        protected override float OnTween(float t)
+        {
+            return Mathf.Lerp(From, To, t);
+        }
     }
 }

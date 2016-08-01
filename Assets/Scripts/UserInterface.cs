@@ -1,5 +1,5 @@
 using UnityEngine;
-using UI;
+using Framework.UI;
 
 public class UserInterface
 {

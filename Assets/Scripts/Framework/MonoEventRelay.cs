@@ -2,44 +2,48 @@ using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
 
-public interface IMonoUpdateReceiver
+namespace Framework
 {
-    void OnUpdate();
-}
-
-public interface IMonoLateUpdateReceiver
-{
-    void OnLateUpdate();
-}
-
-public class MonoEventRelay : MonoBehaviour
-{
-    static List<IMonoUpdateReceiver> updateReceivers;
-    static List<IMonoLateUpdateReceiver> lateUpdateReceivers;
-
-    public void Awake()
+    public interface IMonoUpdateReceiver
     {
-        updateReceivers = new List<IMonoUpdateReceiver>();
-        lateUpdateReceivers = new List<IMonoLateUpdateReceiver>();
+        void OnUpdate();
     }
 
-    public void Update()
+    public interface IMonoLateUpdateReceiver
     {
-        updateReceivers.ForEach(x => x.OnUpdate());
+        void OnLateUpdate();
     }
 
-    public void LateUpdate()
+    public class MonoEventRelay : MonoBehaviour
     {
-        lateUpdateReceivers.ForEach(x => x.OnLateUpdate());
+        static List<IMonoUpdateReceiver> updateReceivers;
+        static List<IMonoLateUpdateReceiver> lateUpdateReceivers;
+
+        public void Awake()
+        {
+            updateReceivers = new List<IMonoUpdateReceiver>();
+            lateUpdateReceivers = new List<IMonoLateUpdateReceiver>();
+        }
+
+        public void Update()
+        {
+            updateReceivers.ForEach(x => x.OnUpdate());
+        }
+
+        public void LateUpdate()
+        {
+            lateUpdateReceivers.ForEach(x => x.OnLateUpdate());
+        }
+
+        public static void RegisterForUpdate(IMonoUpdateReceiver listener)
+        {
+            updateReceivers.Add(listener);
+        }
+
+        public static void RegisterForLateUpdate(IMonoLateUpdateReceiver listener)
+        {
+            lateUpdateReceivers.Add(listener);
+        }
     }
 
-    public static void RegisterForUpdate(IMonoUpdateReceiver listener)
-    {
-        updateReceivers.Add(listener);
-    }
-
-    public static void RegisterForLateUpdate(IMonoLateUpdateReceiver listener)
-    {
-        lateUpdateReceivers.Add(listener);
-    }
 }
