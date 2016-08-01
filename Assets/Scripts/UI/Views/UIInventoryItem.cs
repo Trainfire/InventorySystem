@@ -8,9 +8,15 @@ namespace UI
     {
         public Text Name;
 
-        public override void OnInitialize(ItemData data)
+        public override void OnSetData(ItemData data)
         {
+            Name.enabled = true;
             Name.text = data.Name;
+        }
+
+        public override void OnClear()
+        {
+            Name.enabled = false;
         }
 
         protected override void OnDefault()

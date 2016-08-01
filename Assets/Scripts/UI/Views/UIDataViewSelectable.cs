@@ -111,14 +111,21 @@ namespace UI
                 SelectedData(this);
         }
 
-        public void Initialize(TData data)
+        public void SetData(TData data)
         {
             OnDefault();
             Data = data;
-            OnInitialize(data);
+            OnSetData(data);
         }
 
-        public virtual void OnInitialize(TData data) { }
+        public virtual void OnSetData(TData data) { }
+
+        public void Clear()
+        {
+            OnClear();
+        }
+
+        public virtual void OnClear() { }
 
         public override void OnDestroy()
         {

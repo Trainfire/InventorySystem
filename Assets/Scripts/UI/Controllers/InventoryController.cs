@@ -15,8 +15,11 @@ namespace UI
 
         private ListNavigation navigation;
         private InventoryData inventory;
-        private UIDataViewSelectable<ItemData> currentItemView;
         private InputHoldBehaviour holdDropBehaviour;
+
+        private DataViewList<CategoryType, UIInventoryCategory> categoriesDataView;
+        private DataViewList<ItemData, UIInventoryItem> itemsDataView;
+        private ItemData currentItem;
 
         public void Initialize(Game game)
         {
@@ -26,45 +29,38 @@ namespace UI
             holdDropBehaviour = new InputHoldBehaviour(InputAction.Drop);
             holdDropBehaviour.OnTrigger += HoldDropBehaviour_OnTrigger;
 
+            // Build category list.
+            categoriesDataView = new DataViewList<CategoryType, UIInventoryCategory>(Categories);
+            categoriesDataView.Highlighted += CategoriesDataView_Highlighted;
+            categoriesDataView.AddRange(inventory.GetCategories());
+
+            // Item data list.
+            itemsDataView = new DataViewList<ItemData, UIInventoryItem>(Items);
+            itemsDataView.Highlighted += ItemsDataView_Highlighted;
+
             // Handles navigation between the Category and Items panel.
             navigation = gameObject.GetComponent<ListNavigation>();
-            navigation.Register(Categories);
-            navigation.Register(Items);
+            navigation.Register(categoriesDataView);
+            navigation.Register(itemsDataView);
             navigation.Focused += Navigation_FocusedChanged;
 
             // Register for input.
             InputManager.RegisterHandler(this);
 
-            // Build category list.
-            foreach (var category in inventory.GetCategories())
-            {
-                var view = Categories.AddItem<UIInventoryCategory>();
-                view.Initialize(category);
-                view.HighlightedData += Category_Highlighted;
-            }
-
             // Focus on Categories by default and show items from the first category.
-            navigation.Focus(Categories);
-            Categories.Select();
-            Categories.Highlight();
-            Items.Highlight();
+            navigation.Focus(categoriesDataView);
+            categoriesDataView.Select();
+            categoriesDataView.Highlight();
         }
 
-        private void Category_Highlighted(UIDataViewSelectable<CategoryType> dataView)
+        private void CategoriesDataView_Highlighted(CategoryType category)
         {
             // Clear all items once a category is selected before repopulating it with the new items.
-            Items.Clear();
-
-            foreach (var item in inventory.GetItemsFromCategory(dataView.Data))
-            {
-                var view = Items.AddItem<UIInventoryItem>();
-                view.Initialize(item);
-                view.HighlightedData += Item_Highlighted;
-                view.RemovedData += Item_Removed;
-            }
+            itemsDataView.Clear();
+            itemsDataView.AddRange(inventory.GetItemsFromCategory(category));
 
             // Highlight first item.
-            Items.Highlight();
+            itemsDataView.Highlight();
         }
 
         private void Navigation_FocusedChanged(UIDataViewList dataViewList)
@@ -76,11 +72,11 @@ namespace UI
             if (dataViewList == Items)
             {
                 // Mark the currently highlighted category as Selected.
-                Categories.Select();
+                categoriesDataView.Select();
 
                 // Highlight the first item.
-                Items.ResetAll();
-                Items.Highlight(0);
+                itemsDataView.ResetAll();
+                itemsDataView.Highlight(0);
 
                 // Display controls.
                 ControlList.AddControl(new ControlData(InputAction.Equip, "Equip"));
@@ -88,26 +84,15 @@ namespace UI
             }
 
             if (dataViewList == Categories)
-                Categories.Highlight();
+                categoriesDataView.Highlight();
         }
 
-        private void Item_Removed(UIDataViewSelectable<ItemData> dataView)
+        private void ItemsDataView_Highlighted(ItemData item)
         {
-            dataView.RemovedData -= Item_Removed;
-
-            if (dataView == currentItemView)
-                currentItemView = null;
-
-            if (Items.Count == 0)
-                ItemPreview.gameObject.SetActive(false);
-        }
-
-        private void Item_Highlighted(UIDataViewSelectable<ItemData> dataView)
-        {
-            currentItemView = dataView;
+            currentItem = item;
 
             // Update preview.
-            ItemPreview.SetData(dataView.Data);
+            ItemPreview.SetData(item);
         }
 
         private void HoldDropBehaviour_OnTrigger()
@@ -117,10 +102,13 @@ namespace UI
 
         void DropItem()
         {
-            if (currentItemView != null)
+            if (currentItem != null)
             {
-                inventory.RemoveItem(currentItemView.Data);
-                Items.RemoveItem(currentItemView);
+                inventory.RemoveItem(currentItem);
+                itemsDataView.Remove(currentItem);
+
+                if (itemsDataView.Count == 0)
+                    ItemPreview.gameObject.SetActive(false);
             }
         }
 

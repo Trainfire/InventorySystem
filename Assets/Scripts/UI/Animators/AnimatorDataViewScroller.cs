@@ -10,7 +10,7 @@ class AnimatorDataViewScroller : MonoBehaviour
     {
         scroller = gameObject.AddComponent<AnimatorScroller>();
         dataView = GetComponent<UIDataViewList>();
-        dataView.Highlighted += DataView_Highlighted;
+        //dataView.Highlighted += DataView_Highlighted;
     }
 
     private void DataView_Highlighted(UIDataViewSelectable view)

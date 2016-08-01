@@ -13,12 +13,12 @@ public class ListNavigation : MonoBehaviour, IInputHandler
 
     private InputHoldBehaviour holdBehaviourDown;
     private InputHoldBehaviour holdBehaviourUp;
-    private List<UIDataViewList> lists;
+    private List<DataViewList> lists;
     private int index;
 
-    public void Start()
+    public void Awake()
     {
-        lists = new List<UIDataViewList>();
+        lists = new List<DataViewList>();
 
         holdBehaviourDown = new InputHoldBehaviour(InputAction.Down);
         holdBehaviourDown.OnTrigger += HoldBehaviourDown_OnTrigger;
@@ -29,11 +29,11 @@ public class ListNavigation : MonoBehaviour, IInputHandler
         InputManager.RegisterHandler(this);
     }
 
-    public void Register(UIDataViewList list)
+    public void Register(DataViewList list)
     {
         if (lists.Contains(list))
         {
-            Debug.LogErrorFormat("List '{0}' is already registered.", list.name);
+            Debug.LogErrorFormat("List '{0}' is already registered.", list.DataView.name);
         }
         else
         {
@@ -41,11 +41,11 @@ public class ListNavigation : MonoBehaviour, IInputHandler
         }
     }
 
-    public void Unregister(UIDataViewList list)
+    public void Unregister(DataViewList list)
     {
         if (!lists.Contains(list))
         {
-            Debug.LogErrorFormat("List '{0}' has not been registered.", list.name);
+            Debug.LogErrorFormat("List '{0}' has not been registered.", list.DataView.name);
         }
         else
         {
@@ -53,11 +53,11 @@ public class ListNavigation : MonoBehaviour, IInputHandler
         }
     }
 
-    public void Focus(UIDataViewList list)
+    public void Focus(DataViewList list)
     {
         if (!lists.Contains(list))
         {
-            Debug.LogWarningFormat("Cannot focus on list '{0}' as it has not been registered. Call Register first.", list.name);
+            Debug.LogWarningFormat("Cannot focus on list '{0}' as it has not been registered. Call Register first.", list.DataView.name);
         }
         else
         {
@@ -75,20 +75,20 @@ public class ListNavigation : MonoBehaviour, IInputHandler
         else
         {
             if (Unfocused != null)
-                Unfocused(lists[this.index]);
+                Unfocused(lists[this.index].DataView);
 
-            var focusable = lists[this.index].GetComponent<Focusable>();
+            var focusable = lists[this.index].DataView.GetComponent<Focusable>();
             if (focusable != null)
                 focusable.Unfocus();
 
             this.index = index;
 
-            focusable = lists[this.index].GetComponent<Focusable>();
+            focusable = lists[this.index].DataView.GetComponent<Focusable>();
             if (focusable != null)
                 focusable.Focus();
 
             if (Focused != null)
-                Focused(lists[this.index]);
+                Focused(lists[this.index].DataView);
         }
     }
 
@@ -102,27 +102,21 @@ public class ListNavigation : MonoBehaviour, IInputHandler
             switch (action.Action)
             {
                 case InputAction.Up:
-                    lists[index].Prev();
+                    lists[index].MovePrev();
                     break;
                 case InputAction.Down:
-                    lists[index].Next();
+                    lists[index].MoveNext();
                     break;
                 case InputAction.ScrollUp:
-                    lists[index].Prev();
+                    lists[index].MovePrev();
                     break;
                 case InputAction.ScrollDown:
-                    lists[index].Next();
+                    lists[index].MoveNext();
                     break;
                 case InputAction.Right:
                     FocusNext();
                     break;
                 case InputAction.Left:
-                    FocusPrev();
-                    break;
-                case InputAction.MouseLeft:
-                    FocusNext();
-                    break;
-                case InputAction.MouseRight:
                     FocusPrev();
                     break;
                 default:
@@ -133,12 +127,12 @@ public class ListNavigation : MonoBehaviour, IInputHandler
 
     private void HoldBehaviourUp_OnTrigger()
     {
-        lists[index].Prev();
+        lists[index].MovePrev();
     }
 
     private void HoldBehaviourDown_OnTrigger()
     {
-        lists[index].Next();
+        lists[index].MoveNext();
     }
 
     private void FocusPrev()

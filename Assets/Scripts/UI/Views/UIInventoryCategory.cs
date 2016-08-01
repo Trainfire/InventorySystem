@@ -7,10 +7,16 @@ namespace UI
     {
         public Text Name;
 
-        public override void OnInitialize(CategoryType data)
+        public override void OnSetData(CategoryType data)
         {
-            base.OnInitialize(data);
+            base.OnSetData(data);
+            Name.enabled = true;
             Name.text = data.ToString();
+        }
+
+        public override void OnClear()
+        {
+            Name.enabled = false;
         }
 
         protected override void OnDefault()
