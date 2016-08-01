@@ -19,7 +19,9 @@ namespace Framework.UI
 
         private DataViewList<CategoryType, UIInventoryCategory> categoriesDataView;
         private DataViewList<ItemData, UIInventoryItem> itemsDataView;
+
         private ItemData currentItem;
+        private CategoryType selectedCategory;
 
         public void Initialize(Game game)
         {
@@ -32,6 +34,7 @@ namespace Framework.UI
             // Build category list.
             categoriesDataView = new DataViewList<CategoryType, UIInventoryCategory>(Categories);
             categoriesDataView.Highlighted += CategoriesDataView_Highlighted;
+            categoriesDataView.Selected += CategoriesDataView_Selected;
             categoriesDataView.AddRange(inventory.GetCategories());
 
             // Item data list.
@@ -53,11 +56,20 @@ namespace Framework.UI
             categoriesDataView.Highlight();
         }
 
+        private void CategoriesDataView_Selected(CategoryType category)
+        {
+            selectedCategory = category;
+        }
+
         private void CategoriesDataView_Highlighted(CategoryType category)
         {
             // Clear all items once a category is selected before repopulating it with the new items.
             itemsDataView.Clear();
             itemsDataView.AddRange(inventory.GetItemsFromCategory(category));
+
+            // Move to beginning of list if a different category from the previously selected.
+            if (category != selectedCategory)
+                itemsDataView.MoveToStart();
 
             // Highlight first item.
             itemsDataView.Highlight();
@@ -74,9 +86,14 @@ namespace Framework.UI
                 // Mark the currently highlighted category as Selected.
                 categoriesDataView.Select();
 
-                // Highlight the first item.
-                itemsDataView.ResetAll();
-                itemsDataView.Highlight(0);
+                // If the same category is selected, leave the highlighted view alone.
+                if (categoriesDataView.Current != selectedCategory)
+                {
+                    // Otherwise highlight the first item.
+                    itemsDataView.ResetAll();
+                    itemsDataView.MoveToStart();
+                    itemsDataView.Highlight();
+                }
 
                 // Display controls.
                 ControlList.AddControl(new ControlData(InputAction.Equip, "Equip"));
