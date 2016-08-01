@@ -23,26 +23,5 @@ namespace Framework.UI
             Name.enabled = false;
             ItemCount.enabled = false;
         }
-
-        protected override void OnDefault()
-        {
-            base.OnDefault();
-            Name.color = DefaultColor.Color;
-            ItemCount.color = DefaultColor.Color;
-        }
-
-        protected override void OnHighlight()
-        {
-            base.OnHighlight();
-            Name.color = HighlightedColor.Color;
-            ItemCount.color = HighlightedColor.Color;
-        }
-
-        protected override void OnSelect()
-        {
-            base.OnSelect();
-            Name.color = SelectedColor.Color;
-            ItemCount.color = SelectedColor.Color;
-        }
     }
 }

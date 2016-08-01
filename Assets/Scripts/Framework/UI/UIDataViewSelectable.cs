@@ -1,5 +1,6 @@
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.Events;
 using UnityEngine.EventSystems;
 using System;
 using Framework.Stylesheet;
@@ -13,29 +14,25 @@ namespace Framework.UI
         public event Action<UIDataViewSelectable> Highlighted;
         public event Action<UIDataViewSelectable> Selected;
 
-        public ColorData SelectedColor;
-        public ColorData HighlightedColor;
-        public ColorData DefaultColor;
-
         public bool SelectableByMouse;
 
         public bool IsSelected { get; private set; }
 
-        public virtual void OnAwake()
+        public virtual void Awake()
         {
-            OnDefault();
+            Default();
         }
 
         public virtual void OnDestroy()
         {
             if (Removed != null)
-                Removed(this);
+                Removed.Invoke(this);
         }
 
         public void Default()
         {
             if (Defaulted != null)
-                Defaulted(this);
+                Defaulted.Invoke(this);
 
             IsSelected = false;
 
@@ -45,7 +42,7 @@ namespace Framework.UI
         public void Select()
         {
             if (Selected != null)
-                Selected(this);
+                Selected.Invoke(this);
 
             IsSelected = true;
 
@@ -55,7 +52,7 @@ namespace Framework.UI
         public void Highlight()
         {
             if (Highlighted != null)
-                Highlighted(this);
+                Highlighted.Invoke(this);
 
             OnHighlight();
         }
