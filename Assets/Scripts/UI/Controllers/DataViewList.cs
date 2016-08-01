@@ -82,9 +82,17 @@ public class DataViewList<TData, TView> : DataViewList where TView : UIDataViewS
             // Move to next item, otherwise move back.
             if (data.Count != 0)
             {
-                //// If we remove the last item, jump to the end of the resized list.
-                if (indexOf == data.Count)
+                // If we remove the first item in the current view, go back one item.
+                if (dataIndex != 0 && viewIndex == 0)
+                {
+                    MovePrev();
+                }
+
+                // If we remove the last item, jump to the end of the resized list.
+                if (indexOf == data.Count || viewIndex == DataView.MaxViews)
+                {
                     viewIndex = LastViewIndex();
+                }
 
                 Highlight();
             }
@@ -278,8 +286,6 @@ public class DataViewList<TData, TView> : DataViewList where TView : UIDataViewS
     /// <returns></returns>
     int LastViewIndex()
     {
-        if (data.Count < DataView.MaxViews)
-            return data.Count - 1;
-        return DataView.MaxViews - 1;
+        return Math.Max(0, data.Skip(dataIndex).Take(DataView.MaxViews).ToList().Count - 1);
     }
 }
