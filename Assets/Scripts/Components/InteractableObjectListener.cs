@@ -1,4 +1,6 @@
 using UnityEngine;
+using Framework;
+using System;
 
 public class InteractableObjectListener : MonoBehaviour
 {
@@ -39,6 +41,11 @@ public class InteractableObjectListener : MonoBehaviour
         {
             LeaveItem();
         }
+    }
+
+    public void OnDisable()
+    {
+        currentItem = null;
     }
 
     private void LeaveItem()

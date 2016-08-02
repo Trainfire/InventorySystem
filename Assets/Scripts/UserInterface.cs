@@ -17,6 +17,7 @@ public class UserInterface : MonoBehaviour, IGameDependent, IInputHandler
     public void Initialize(Game game)
     {
         Inventory.Initialize(game.Data.Inventory);
+        Hud.Initialize(game);
 
         InputManager.RegisterHandler(this);
     }

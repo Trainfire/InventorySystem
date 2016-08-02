@@ -1,13 +1,22 @@
 using UnityEngine;
+using Framework;
 using Framework.UI;
 using System.Collections;
+using System.Collections.Generic;
+using System;
 
-public class UIHud : MonoBehaviour
+public class UIHud : MonoBehaviourEx, IStateListener
 {
     public UIWorldItem worldItemPrototype;
     public InteractableObjectListener InteractableListener;
 
     private UIWorldItem worldItemInstance;
+
+    public override void Initialize(Game game)
+    {
+        base.Initialize(game);
+        game.GameState.StateManager.RegisterListener(this);
+    }
 
     public void Start()
     {
@@ -39,6 +48,15 @@ public class UIHud : MonoBehaviour
 
     void RemoveItemUI()
     {
-        Destroy(worldItemInstance.gameObject);
+        if (worldItemInstance != null)
+            Destroy(worldItemInstance.gameObject);
+    }
+
+    void IStateListener.OnStateChanged(State state)
+    {
+        if (state == State.Paused)
+        {
+            RemoveItemUI();
+        }
     }
 }

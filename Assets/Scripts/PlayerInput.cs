@@ -3,7 +3,7 @@ using System.Collections;
 using Framework;
 using System;
 
-public class PlayerInput : MonoBehaviourEx, IInputHandler
+public class PlayerInput : MonoBehaviourEx, IInputHandler, IStateListener
 {
     public InteractableObjectListener InteractableObjectListener;
 
@@ -12,6 +12,7 @@ public class PlayerInput : MonoBehaviourEx, IInputHandler
     public void Awake()
     {
         InputManager.RegisterHandler(this);
+        Game.GameState.StateManager.RegisterListener(this);
 
         InteractableObjectListener.LookEntered.AddListener((obj) => currentInteractable = obj);
     }
@@ -39,5 +40,10 @@ public class PlayerInput : MonoBehaviourEx, IInputHandler
                 }
             }
         }
+    }
+
+    void IStateListener.OnStateChanged(State state)
+    {
+        InteractableObjectListener.enabled = state == State.Running;
     }
 }

@@ -8,13 +8,13 @@ using System;
 /// </summary>
 public class GameState
 {
-    public State State { get { return stateManager.State; } }
+    public State State { get { return StateManager.State; } }
 
-    private StateManager stateManager;
+    public StateManager StateManager;
 
     public GameState(Game game)
     {
-        stateManager = new StateManager();
+        StateManager = new StateManager();
 
         game.UserInterface.MenuOpened += UserInterface_MenuOpened;
         game.UserInterface.MenuClosed += UserInterface_MenuClosed;
@@ -22,11 +22,11 @@ public class GameState
 
     private void UserInterface_MenuClosed()
     {
-        stateManager.SetState(State.Running);
+        StateManager.SetState(State.Running);
     }
 
     private void UserInterface_MenuOpened()
     {
-        stateManager.SetState(State.Paused);
+        StateManager.SetState(State.Paused);
     }
 }
