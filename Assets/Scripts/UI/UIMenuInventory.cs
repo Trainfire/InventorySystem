@@ -5,13 +5,14 @@ using Framework;
 using Framework.UI;
 using System;
 
-public class UIMenuInventory : UIMenu
+public class UIMenuInventory : MonoBehaviourEx, IInputHandler
 {
     public ControlList ControlList;
     public UIDataViewList Categories;
     public UIDataViewList Items;
     public UIItemPreview ItemPreview;
 
+    private InputGroupHandler _inputGroupHandler;
     private ListNavigation navigation;
     private InventoryData inventory;
     private InputHoldBehaviour holdDropBehaviour;
@@ -50,7 +51,10 @@ public class UIMenuInventory : UIMenu
         navigation.Register(itemsDataView);
         navigation.Focused += Navigation_FocusedChanged;
 
-        RegisterInputHandler(navigation);
+        _inputGroupHandler = gameObject.AddComponent<InputGroupHandler>();
+        _inputGroupHandler.InputEnabled = true;
+        _inputGroupHandler.RegisterInputHandler(this);
+        _inputGroupHandler.RegisterInputHandler(navigation);
     }
 
     protected override void OnShow()
@@ -155,7 +159,7 @@ public class UIMenuInventory : UIMenu
         }
     }
 
-    protected override void HandleInput(InputActionEvent action)
+    void IInputHandler.HandleInput(InputActionEvent action)
     {
         if (action.Action == InputAction.Drop && action.Type == InputActionType.Down)
             DropItem();

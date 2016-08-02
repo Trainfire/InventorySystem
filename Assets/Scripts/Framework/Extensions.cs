@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -23,6 +24,14 @@ namespace Framework
 
     static class GameObjectEx
     {
+        public static T GetComponent<T>(this GameObject obj, Action<T> onGet)
+        {
+            var comp = obj.GetComponent<T>();
+            if (comp != null)
+                onGet(comp);
+            return comp;
+        }
+
         public static T GetOrAddComponent<T>(this GameObject obj) where T : Component
         {
             var comp = obj.GetComponent<T>();

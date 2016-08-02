@@ -22,11 +22,12 @@ public class Menu : MonoBehaviourEx
     private void Animation_TransitionOutFinished()
     {
         _inventory.SetVisibility(false);
+        _inventory.gameObject.SetActive(false);
     }
 
     protected override void OnShow()
     {
-        _inventory.InputEnabled = true;
+        _inventory.gameObject.GetComponent<InputGroupHandler>((comp) => comp.InputEnabled = true);
         _inventory.SetVisibility(true);
         _animation.TransitionIn();
     }
@@ -34,6 +35,6 @@ public class Menu : MonoBehaviourEx
     protected override void OnHide()
     {
         _animation.TransitionOut();
-        _inventory.InputEnabled = false;
+        _inventory.gameObject.GetComponent<InputGroupHandler>((comp) => comp.InputEnabled = false);
     }
 }
