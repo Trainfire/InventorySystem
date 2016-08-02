@@ -10,7 +10,7 @@ public class UserInterface : MonoBehaviour, IGameDependent, IInputHandler
 
     public Menu menu;
     public UIHud Hud;
-    public Inventory Inventory;
+    public UIMenuInventory Inventory;
 
     private bool menuOpen;
 
@@ -40,7 +40,7 @@ public class UserInterface : MonoBehaviour, IGameDependent, IInputHandler
                     MenuOpened();
             }
 
-            menu.gameObject.SetActive(menuOpen);
+            menu.SetVisibility(menuOpen);
             Hud.gameObject.SetActive(!menuOpen);
         }
     }

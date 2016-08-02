@@ -3,7 +3,7 @@ using System.Collections;
 using Framework;
 using System;
 
-public class PlayerInput : MonoBehaviourEx, IInputHandler, IStateListener
+public class PlayerInput : GameBase, IInputHandler, IStateListener
 {
     public InteractableObjectListener InteractableObjectListener;
 

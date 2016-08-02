@@ -5,7 +5,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System;
 
-public class UIHud : MonoBehaviourEx, IStateListener
+public class UIHud : GameBase, IStateListener
 {
     public UIWorldItem worldItemPrototype;
     public InteractableObjectListener InteractableListener;

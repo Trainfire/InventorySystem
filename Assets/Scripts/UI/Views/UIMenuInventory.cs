@@ -5,7 +5,7 @@ using Framework;
 using Framework.UI;
 using System;
 
-public class Inventory : MonoBehaviour, IInputHandler
+public class UIMenuInventory : MonoBehaviourEx, IInputHandler
 {
     public ControlList ControlList;
     public UIDataViewList Categories;
@@ -27,8 +27,10 @@ public class Inventory : MonoBehaviour, IInputHandler
         this.inventory = inventory;
     }
 
-    public void Start()
+    protected override void OnFirstShow()
     {
+        base.OnFirstShow();
+
         holdDropBehaviour = new InputHoldBehaviour(InputAction.Drop);
         holdDropBehaviour.OnTrigger += HoldDropBehaviour_OnTrigger;
 
@@ -36,7 +38,6 @@ public class Inventory : MonoBehaviour, IInputHandler
         categoriesDataView = new DataViewList<CategoryData, UIInventoryCategory>(Categories);
         categoriesDataView.Highlighted += CategoriesDataView_Highlighted;
         categoriesDataView.Selected += CategoriesDataView_Selected;
-        categoriesDataView.AddRange(inventory.GetCategories());
 
         // Item data list.
         itemsDataView = new DataViewList<ItemData, UIInventoryItem>(Items);
@@ -51,11 +52,27 @@ public class Inventory : MonoBehaviour, IInputHandler
 
         // Register for input.
         InputManager.RegisterHandler(this);
+    }
+
+    protected override void OnShow()
+    {
+        base.OnShow();
+
+        // Update categories.
+        categoriesDataView.AddRange(inventory.GetCategories());
 
         // Focus on Categories by default and show items from the first category.
         navigation.Focus(categoriesDataView);
         categoriesDataView.Select();
         categoriesDataView.Highlight();
+    }
+
+    protected override void OnHide()
+    {
+        base.OnHide();
+
+        categoriesDataView.Clear();
+        itemsDataView.Clear();
     }
 
     private void CategoriesDataView_Selected(CategoryData category)

@@ -2,6 +2,9 @@ using UnityEngine;
 using Framework;
 using System.Collections;
 using System.Collections.Generic;
+using System.Reflection;
+using System.Linq;
+using System;
 
 public class Bootstrapper : MonoBehaviour
 {
@@ -45,7 +48,7 @@ public interface IGameDependent
     void Initialize(Game game);
 }
 
-public class MonoBehaviourEx : MonoBehaviour, IGameDependent
+public class GameBase : MonoBehaviourEx, IGameDependent
 {
     public Game Game { get; private set; }
 

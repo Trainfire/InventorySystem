@@ -1,16 +1,18 @@
 using UnityEngine;
 using System.Collections;
+using Framework;
 
-public class Menu : MonoBehaviour
+public class Menu : MonoBehaviourEx
 {
+    public UIMenuInventory Inventory;
 
-	// Use this for initialization
-	void Start () {
-	
-	}
-	
-	// Update is called once per frame
-	void Update () {
-	
-	}
+    protected override void OnShow()
+    {
+        Inventory.SetVisibility(true);
+    }
+
+    protected override void OnHide()
+    {
+        Inventory.SetVisibility(false);
+    }
 }
