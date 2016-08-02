@@ -1,11 +1,11 @@
-﻿using UnityEngine;
+using UnityEngine;
 using UnityEngine.UI;
 using System.Collections.Generic;
 using Framework.Stylesheet;
 
 namespace Framework.UI
 {
-    public class UIDataViewSelectableColor : MonoBehaviour
+    public class UISelectableColors : MonoBehaviour
     {
         public List<Graphic> Affectors;
         public ColorData SelectedColor;

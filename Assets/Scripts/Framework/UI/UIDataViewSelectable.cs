@@ -7,16 +7,9 @@ using Framework.Stylesheet;
 
 namespace Framework.UI
 {
-    public class UIDataViewSelectable : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler, IPointerClickHandler
+    public class UIDataViewSelectable : UISelectable, IPointerEnterHandler, IPointerExitHandler, IPointerClickHandler
     {
-        public event Action<UIDataViewSelectable> Removed;
-        public event Action<UIDataViewSelectable> Defaulted;
-        public event Action<UIDataViewSelectable> Highlighted;
-        public event Action<UIDataViewSelectable> Selected;
-
-        public bool SelectableByMouse;
-
-        public bool IsSelected { get; private set; }
+        public event Action<UIDataViewSelectable> Removed;        
 
         public virtual void Awake()
         {
@@ -27,34 +20,6 @@ namespace Framework.UI
         {
             if (Removed != null)
                 Removed.Invoke(this);
-        }
-
-        public void Default()
-        {
-            if (Defaulted != null)
-                Defaulted.Invoke(this);
-
-            IsSelected = false;
-
-            OnDefault();
-        }
-
-        public void Select()
-        {
-            if (Selected != null)
-                Selected.Invoke(this);
-
-            IsSelected = true;
-
-            OnSelect();
-        }
-
-        public void Highlight()
-        {
-            if (Highlighted != null)
-                Highlighted.Invoke(this);
-
-            OnHighlight();
         }
 
         void IPointerExitHandler.OnPointerExit(PointerEventData eventData)
@@ -74,10 +39,6 @@ namespace Framework.UI
             if (SelectableByMouse)
                 Select();
         }
-
-        protected virtual void OnDefault() { }
-        protected virtual void OnHighlight() { }
-        protected virtual void OnSelect() { }
     }
 
     /// <summary>
