@@ -22,11 +22,13 @@ public class Inventory : MonoBehaviour, IInputHandler
     private ItemData currentItem;
     private CategoryType selectedCategory;
 
-    public void Initialize(Game game)
+    public void Initialize(InventoryData inventory)
     {
-        // Get inventory.
-        inventory = game.Data.Inventory;
+        this.inventory = inventory;
+    }
 
+    public void Start()
+    {
         holdDropBehaviour = new InputHoldBehaviour(InputAction.Drop);
         holdDropBehaviour.OnTrigger += HoldDropBehaviour_OnTrigger;
 

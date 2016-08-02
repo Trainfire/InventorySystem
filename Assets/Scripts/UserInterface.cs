@@ -1,13 +1,12 @@
 using UnityEngine;
 using Framework.UI;
 
-public class UserInterface
+public class UserInterface : MonoBehaviour, IGameDependent
 {
-    private Inventory inventory;
+    public Inventory Inventory;
 
-    public UserInterface(Game game)
+    public void Initialize(Game game)
     {
-        inventory = Object.FindObjectOfType<Inventory>();
-        inventory.Initialize(game);
+        Inventory.Initialize(game.Data.Inventory);
     }
 }
