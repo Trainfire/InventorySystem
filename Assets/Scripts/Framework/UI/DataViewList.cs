@@ -156,6 +156,9 @@ namespace Framework.UI
                     views[i].Clear();
                 }
             }
+
+            DataView.EnableDownArrow = !IsDataEnd();
+            DataView.EnableUpArrow = dataIndex != 0;
         }
 
         void View_SelectedData(UIDataViewSelectable<TData> view)
@@ -209,6 +212,8 @@ namespace Framework.UI
 
                 if (viewIndex != 0)
                     viewIndex--;
+
+                DataView.EnableUpArrow = dataIndex == 0;
             }
 
             UpdateViews();
