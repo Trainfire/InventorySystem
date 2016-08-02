@@ -1,4 +1,6 @@
 using Models;
+using UnityEngine;
+using System;
 
 public class Data
 {
@@ -15,31 +17,38 @@ public class Data
 
         for (int i = 0; i < 30; i++)
         {
-            mockData.AddItem(new ItemData()
+            mockData.AddItem(MakeItem(item =>
             {
-                Name = "Apple " + i,
-                Category = CategoryType.Consumable,
-            });
+                item.Name = "Apple " + i;
+                item.Category = CategoryType.Consumable;
+            }));
 
-            mockData.AddItem(new ItemData()
+            mockData.AddItem(MakeItem(item =>
             {
-                Name = "Mighty Sword " + i,
-                Category = CategoryType.Weapon,
-            });
+                item.Name = "Mighty Sword " + i;
+                item.Category = CategoryType.Weapon;
+            }));
 
-            mockData.AddItem(new ItemData()
+            mockData.AddItem(MakeItem(item =>
             {
-                Name = "Old Hat " + i,
-                Category = CategoryType.Misc,
-            });
+                item.Name = "Old Hat " + i;
+                item.Category = CategoryType.Cosmetic;
+            }));
 
-            mockData.AddItem(new ItemData()
+            mockData.AddItem(MakeItem(item =>
             {
-                Name = "Dapper Bowtie " + i,
-                Category = CategoryType.Cosmetic,
-            });
+                item.Name = "Dapper Bowtier " + i;
+                item.Category = CategoryType.Cosmetic;
+            }));
         }
 
         return mockData;
+    }
+
+    ItemData MakeItem(Action<ItemData> onAdd)
+    {
+        var instance = ScriptableObject.CreateInstance<ItemData>();
+        onAdd(instance);
+        return instance;
     }
 }
