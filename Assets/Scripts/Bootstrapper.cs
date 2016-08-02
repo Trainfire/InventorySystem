@@ -5,9 +5,10 @@ using System.Collections.Generic;
 
 public class Bootstrapper : MonoBehaviour
 {
-    public MonoEventRelay MonoEventRelay;
     public UserInterface UserInterface;
-    public GameState GameState;
+    public PlayerInput PlayerInput;
+
+    public MonoEventRelay MonoEventRelay;
 
     public void Awake()
     {
@@ -16,6 +17,7 @@ public class Bootstrapper : MonoBehaviour
 
         // Inject dependency here.
         UserInterface.Initialize(game);
+        PlayerInput.Initialize(game);
     }
 }
 
@@ -34,11 +36,21 @@ public class Game
 
         InputManager.RegisterMap(new InputMapPC());
         Data = new Data();
-        GameState = new GameState();
+        GameState = new GameState(this);
     }
 }
 
 public interface IGameDependent
 {
     void Initialize(Game game);
+}
+
+public class MonoBehaviourEx : MonoBehaviour, IGameDependent
+{
+    public Game Game { get; private set; }
+
+    public virtual void Initialize(Game game)
+    {
+        Game = game;
+    }
 }

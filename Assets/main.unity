@@ -163,6 +163,8 @@ GameObject:
   - 114: {fileID: 16852193}
   - 114: {fileID: 16852191}
   - 114: {fileID: 16852194}
+  - 114: {fileID: 16852197}
+  - 114: {fileID: 16852196}
   m_Layer: 0
   m_Name: Root
   m_TagString: Untagged
@@ -206,8 +208,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f0545ecca43e5d245af6b9aa7d91650d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  MonoEventRelay: {fileID: 16852191}
   UserInterface: {fileID: 16852194}
+  PlayerInput: {fileID: 16852197}
+  MonoEventRelay: {fileID: 16852191}
 --- !u!114 &16852194
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -219,7 +222,42 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 23ce868d245edb4478bed94f4f696f58, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  menu: {fileID: 754234232}
+  Hud: {fileID: 1951044265}
   Inventory: {fileID: 1196174958}
+--- !u!114 &16852196
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 16852190}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d0c22588abaee554db0b02d8d977e97d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  LookEntered:
+    m_PersistentCalls:
+      m_Calls: []
+    m_TypeName: InteractableObjectEvent, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
+      PublicKeyToken=null
+  LookLeft:
+    m_PersistentCalls:
+      m_Calls: []
+    m_TypeName: InteractableObjectEvent, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
+      PublicKeyToken=null
+--- !u!114 &16852197
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 16852190}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0e5bffd0c5b31e542afb5983ef120ca1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  InteractableObjectListener: {fileID: 16852196}
 --- !u!1 &20833604
 GameObject:
   m_ObjectHideFlags: 0
@@ -2489,6 +2527,7 @@ GameObject:
   - 224: {fileID: 754234229}
   - 222: {fileID: 754234230}
   - 114: {fileID: 754234231}
+  - 114: {fileID: 754234232}
   m_Layer: 5
   m_Name: Menu
   m_TagString: Untagged
@@ -2549,6 +2588,17 @@ MonoBehaviour:
   m_FillAmount: 1
   m_FillClockwise: 1
   m_FillOrigin: 0
+--- !u!114 &754234232
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 754234228}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6ef9c14a1a1876d418967915c872a3a2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &767461968
 GameObject:
   m_ObjectHideFlags: 0
@@ -2844,6 +2894,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fd9111354643a2041b85cb4631d42186, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  PickedUp:
+    m_PersistentCalls:
+      m_Calls: []
+    m_TypeName: ItemPickedEvent, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
+      PublicKeyToken=null
   ItemData: {fileID: 11400000, guid: de5d0f2e72e89c944a58117f29faf9fa, type: 2}
 --- !u!114 &922093729
 MonoBehaviour:
@@ -5494,6 +5549,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   worldItemPrototype: {fileID: 11406334, guid: 8f0419bbbc4588f4096bf1ba7eac07a9, type: 2}
+  InteractableListener: {fileID: 16852196}
 --- !u!1 &1956177742
 GameObject:
   m_ObjectHideFlags: 0

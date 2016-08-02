@@ -5,25 +5,21 @@ using System.Collections;
 public class UIHud : MonoBehaviour
 {
     public UIWorldItem worldItemPrototype;
+    public InteractableObjectListener InteractableListener;
 
-    private InteractableObjectListener interactableListener;
     private UIWorldItem worldItemInstance;
 
     public void Start()
     {
-        interactableListener = gameObject.AddComponent<InteractableObjectListener>();
+        InteractableListener.LookEntered.AddListener(obj => OnObjectLookedAt(obj));
+        InteractableListener.LookLeft.AddListener(obj => RemoveItemUI());
+    }
 
-        interactableListener.LookEntered.AddListener((obj) =>
-        {
-            var item = obj.GetComponent<Item>();
-            if (item)
-                ShowItem(item);
-        });
-
-        interactableListener.LookLeft.AddListener((obj) =>
-        {
-            Destroy(worldItemInstance.gameObject);
-        });
+    void OnObjectLookedAt(InteractableObject obj)
+    {
+        var item = obj.GetComponent<Item>();
+        if (item)
+            ShowItem(item);
     }
 
     void ShowItem(Item item)
@@ -31,5 +27,18 @@ public class UIHud : MonoBehaviour
         worldItemInstance = UIUtility.Add<UIWorldItem>(transform, worldItemPrototype.gameObject);
         worldItemInstance.SetData(item.ItemData);
         worldItemInstance.SetPrompt("Take (E)");
+
+        // Listen for item pickup so we can cleanup UI.
+        item.PickedUp.AddListener(OnItemPickedUp);
+    }
+
+    void OnItemPickedUp(Item item)
+    {
+        RemoveItemUI();
+    }
+
+    void RemoveItemUI()
+    {
+        Destroy(worldItemInstance.gameObject);
     }
 }

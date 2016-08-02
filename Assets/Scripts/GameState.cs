@@ -6,13 +6,13 @@ using System;
 /// <summary>
 /// Manages the state of the game.
 /// </summary>
-public class GameState : MonoBehaviour, IGameDependent
+public class GameState
 {
     public State State { get { return stateManager.State; } }
 
     private StateManager stateManager;
 
-    public void Initialize(Game game)
+    public GameState(Game game)
     {
         stateManager = new StateManager();
 
