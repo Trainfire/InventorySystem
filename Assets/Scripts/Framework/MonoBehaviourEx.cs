@@ -5,7 +5,12 @@ namespace Framework
 {
     public class MonoBehaviourEx : MonoBehaviour
     {
-        private bool alreadyShown;
+        private bool _alreadyShown;
+
+        /// <summary>
+        /// If false, the gameobject will still be active after visibility is set to false.
+        /// </summary>
+        protected bool _disableOnHide;
 
         /// <summary>
         /// Use this as a substitute for SetActive. Unlike the OnEnable and OnDisable callbacks, the call order for OnShow and OnHide is guaranteed to be in order.
@@ -17,9 +22,9 @@ namespace Framework
             {
                 gameObject.SetActive(true);
 
-                if (!alreadyShown)
+                if (!_alreadyShown)
                 {
-                    alreadyShown = true;
+                    _alreadyShown = true;
                     OnFirstShow();
                 }
 
@@ -28,7 +33,8 @@ namespace Framework
             else
             {
                 OnHide();
-                gameObject.SetActive(false);
+                if (_disableOnHide)
+                    gameObject.SetActive(false);
             }
         }
 
@@ -38,5 +44,6 @@ namespace Framework
         protected virtual void OnFirstShow() { }
         protected virtual void OnShow() { }
         protected virtual void OnHide() { }
+        protected virtual void OnHideOverride() { }
     }
 }

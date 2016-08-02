@@ -27,8 +27,6 @@ namespace Framework.UI
 
             holdBehaviourUp = new InputHoldBehaviour(InputAction.Up);
             holdBehaviourUp.OnTrigger += HoldBehaviourUp_OnTrigger;
-
-            InputManager.RegisterHandler(this);
         }
 
         public void Register(DataViewList list)

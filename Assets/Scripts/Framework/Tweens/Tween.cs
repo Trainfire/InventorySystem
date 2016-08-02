@@ -1,18 +1,27 @@
+using System;
 using UnityEngine;
 using UnityEngine.Events;
 
 namespace Framework
 {
-    public abstract class Tween<T> : MonoBehaviour
+    public abstract class Tween<T> : IMonoUpdateReceiver
     {
         public UnityAction<T> OnTweenValue;
         public float Duration;
         public bool DoTween = false;
-        public T Value;
+
+        public T Value { get; private set; }
+        public T From { get; set; }
+        public T To { get; set; }
 
         bool Tweening { get; set; }
         float CurrentTime { get; set; }
         UnityAction OnDone { get; set; }
+
+        public Tween()
+        {
+            MonoEventRelay.RegisterForUpdate(this);
+        }
 
         public void Play(UnityAction onDone = null)
         {
@@ -21,7 +30,9 @@ namespace Framework
             OnDone = onDone;
         }
 
-        void Update()
+        protected abstract T OnTween(float delta);
+
+        void IMonoUpdateReceiver.OnUpdate()
         {
             if (DoTween)
             {
@@ -42,12 +53,13 @@ namespace Framework
                 if (CurrentTime > Duration)
                 {
                     Tweening = false;
+
+                    Value = To;
+
                     if (OnDone != null)
                         OnDone();
                 }
             }
         }
-
-        protected abstract T OnTween(float delta);
     }
 }

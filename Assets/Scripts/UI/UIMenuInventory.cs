@@ -5,7 +5,7 @@ using Framework;
 using Framework.UI;
 using System;
 
-public class UIMenuInventory : MonoBehaviourEx, IInputHandler
+public class UIMenuInventory : UIMenu
 {
     public ControlList ControlList;
     public UIDataViewList Categories;
@@ -50,8 +50,7 @@ public class UIMenuInventory : MonoBehaviourEx, IInputHandler
         navigation.Register(itemsDataView);
         navigation.Focused += Navigation_FocusedChanged;
 
-        // Register for input.
-        InputManager.RegisterHandler(this);
+        RegisterInputHandler(navigation);
     }
 
     protected override void OnShow()
@@ -156,7 +155,7 @@ public class UIMenuInventory : MonoBehaviourEx, IInputHandler
         }
     }
 
-    void IInputHandler.HandleInput(InputActionEvent action)
+    protected override void HandleInput(InputActionEvent action)
     {
         if (action.Action == InputAction.Drop && action.Type == InputActionType.Down)
             DropItem();

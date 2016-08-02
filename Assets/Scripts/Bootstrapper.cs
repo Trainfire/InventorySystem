@@ -8,10 +8,9 @@ using System;
 
 public class Bootstrapper : MonoBehaviour
 {
-    public UserInterface UserInterface;
-    public PlayerInput PlayerInput;
-
-    public MonoEventRelay MonoEventRelay;
+    [SerializeField] private UserInterface UserInterface;
+    [SerializeField] private PlayerInput PlayerInput;
+    [SerializeField] private MonoEventRelay MonoEventRelay;
 
     public void Awake()
     {
