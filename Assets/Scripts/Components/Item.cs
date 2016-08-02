@@ -1,10 +1,7 @@
-﻿using UnityEngine;
+using UnityEngine;
 using Models;
 
-namespace Components
+class Item : MonoBehaviour
 {
-    class Item : MonoBehaviour
-    {
-        public ItemData ItemData;
-    }
+    public ItemData ItemData;
 }
