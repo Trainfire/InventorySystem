@@ -6,7 +6,6 @@ namespace Framework
 {
     public class TweenQuat : Tween<Quaternion>
     {
-        public Quaternion Value;
         public Quaternion From;
         public Quaternion To;
 
