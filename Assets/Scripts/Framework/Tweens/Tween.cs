@@ -7,8 +7,8 @@ namespace Framework
     {
         public UnityAction<T> OnTweenValue;
         public float Duration;
-
         public bool DoTween = false;
+        public T Value;
 
         bool Tweening { get; set; }
         float CurrentTime { get; set; }
@@ -32,10 +32,10 @@ namespace Framework
 
             if (Tweening)
             {
-                T value = OnTween(CurrentTime / Duration);
+                Value = OnTween(CurrentTime / Duration);
 
                 if (OnTweenValue != null)
-                    OnTweenValue(value);
+                    OnTweenValue(Value);
 
                 CurrentTime += Time.deltaTime;
 
