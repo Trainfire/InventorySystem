@@ -24,6 +24,8 @@ public class InputMapPC : InputMap, IMonoLateUpdateReceiver
         AddBinding(InputAction.Down, KeyCode.DownArrow);
         AddBinding(InputAction.Left, KeyCode.LeftArrow);
         AddBinding(InputAction.Drop, KeyCode.Delete);
+        AddBinding(InputAction.LeftBumper, KeyCode.Q); // Debug
+        AddBinding(InputAction.RightBumper, KeyCode.E); // Debug
     }
 
     public void AddBinding(InputAction action, KeyCode key)

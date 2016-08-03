@@ -1,4 +1,4 @@
-﻿using UnityEngine;
+using UnityEngine;
 using System;
 using System.Collections.Generic;
 
@@ -24,19 +24,27 @@ namespace Framework
         }
     }
 
+    public abstract class CyclicalList
+    {
+        public abstract void MoveNext();
+        public abstract void MovePrev();
+        public abstract void MoveToStart();
+        public abstract void MoveToEnd();
+    }
+
     /// <summary>
     /// Allows a referenced list to be traversed via MoveNext and MovePrev.
     /// </summary>
     /// <typeparam name="T"></typeparam>
-    public class CyclicalList<T>
+    public class CyclicalList<T> : CyclicalList
     {
         public event EventHandler<CyclicalListEvent<T>> Moved;
 
         /// <summary>
-        /// If true, the list will automatically return to first item when moving forward on the last item.
-        /// It will automatically return to the last item when moving backwards from the first item.
+        /// If true, the list will automatically return to first item when moving forward on the last item,
+        /// and will automatically return to the last item when moving backwards from the first item.
         /// </summary>
-        public bool ShouldWrap { get; set; }
+        public bool Wrapped { get; set; }
 
         private List<T> list;
         private int index;
@@ -50,41 +58,39 @@ namespace Framework
             this.list = list;
         }
 
-        public void MoveNext()
+        public override void MoveNext()
         {
             if (index < list.Count - 1)
             {
                 index++;
+                OnMove(CycleType.Forward);
             }
-            else
+            else if (Wrapped)
             {
-                index = 0;
+                MoveToStart();
             }
-
-            OnMove(CycleType.Forward);
         }
 
-        public void MovePrev()
+        public override void MovePrev()
         {
             if (index > 0)
             {
                 index--;
+                OnMove(CycleType.Backward);
             }
-            else
+            else if (Wrapped)
             {
-                index = list.Count - 1;
+                MoveToEnd();
             }
-
-            OnMove(CycleType.Backward);
         }
 
-        public void MoveToStart()
+        public override void MoveToStart()
         {
             index = 0;
             OnMove(CycleType.ToStart);
         }
 
-        public void MoveToEnd()
+        public override void MoveToEnd()
         {
             index = list.Count - 1;
             OnMove(CycleType.ToEnd);

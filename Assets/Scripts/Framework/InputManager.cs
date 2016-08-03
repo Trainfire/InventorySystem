@@ -23,6 +23,10 @@ namespace Framework
         ScrollDown,
         MouseLeft,
         MouseRight,
+        LeftTrigger,
+        RightTrigger,
+        LeftBumper,
+        RightBumper,
     }
 
     // The type of action
@@ -129,11 +133,9 @@ namespace Framework
         public InputHoldBehaviour(InputAction trigger)
         {
             this.trigger = trigger;
-
-            InputManager.RegisterHandler(this);
         }
 
-        void IInputHandler.HandleInput(InputActionEvent action)
+        public void HandleInput(InputActionEvent action)
         {
             if (action.Type == InputActionType.Held && action.Action == trigger)
             {

@@ -92,10 +92,13 @@ namespace Framework.UI
             }
         }
 
-        void IInputHandler.HandleInput(InputActionEvent action)
+        public void HandleInput(InputActionEvent action)
         {
             if (lists.Count == 0)
                 return;
+
+            holdBehaviourDown.HandleInput(action);
+            holdBehaviourUp.HandleInput(action);
 
             if (action.Type == InputActionType.Down)
             {

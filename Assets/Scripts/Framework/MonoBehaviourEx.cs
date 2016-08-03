@@ -10,7 +10,7 @@ namespace Framework
         /// <summary>
         /// If false, the gameobject will still be active after visibility is set to false.
         /// </summary>
-        protected bool _disableOnHide;
+        protected bool _disableOnHide = true;
 
         /// <summary>
         /// Use this as a substitute for SetActive. Unlike the OnEnable and OnDisable callbacks, the call order for OnShow and OnHide is guaranteed to be in order.
