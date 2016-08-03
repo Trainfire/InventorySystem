@@ -84,6 +84,7 @@ public class Menu : MonoBehaviourEx
 
     private void MenuButton_OnPressed(MenuBase menu)
     {
+        CyclicalList.Set(menu);
         SetMenu(menu);
     }
 

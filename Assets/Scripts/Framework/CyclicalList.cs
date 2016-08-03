@@ -58,6 +58,17 @@ namespace Framework
             this.list = list;
         }
 
+        /// <summary>
+        /// Updates the internal index to match the index of the specified value.
+        /// </summary>
+        public void Set(T data)
+        {
+            if (list.Contains(data))
+            {
+                index = list.IndexOf(data);
+            }
+        }
+
         public override void MoveNext()
         {
             if (index < list.Count - 1)
