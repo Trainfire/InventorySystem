@@ -5,7 +5,7 @@ using Framework;
 using Framework.UI;
 using System;
 
-public class UIMenuInventory : UIMenu
+public class MenuInventory : MenuBase
 {
     public ControlList ControlList;
     public UIDataViewList Categories;

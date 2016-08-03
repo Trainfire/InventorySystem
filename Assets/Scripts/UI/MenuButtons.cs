@@ -5,20 +5,20 @@ using Framework.UI;
 
 class MenuButtons : MonoBehaviour
 {
-    public event Action<UIMenu> ButtonPressed;
+    public event Action<MenuBase> ButtonPressed;
 
     [SerializeField] private UIMenuButton Prototype;
 
-    private Dictionary<UIMenuButton, UIMenu> _buttons;
+    private Dictionary<UIMenuButton, MenuBase> _buttons;
 
     public void Awake()
     {
-        _buttons = new Dictionary<UIMenuButton, UIMenu>();
+        _buttons = new Dictionary<UIMenuButton, MenuBase>();
 
         Prototype.gameObject.SetActive(false);
     }
 
-    public void AddButton(UIMenu menu, string label)
+    public void AddButton(MenuBase menu, string label)
     {
         var instance = UIUtility.Add<UIMenuButton>(transform, Prototype.gameObject);
         instance.Label = label;

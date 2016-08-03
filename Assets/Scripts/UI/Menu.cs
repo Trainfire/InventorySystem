@@ -7,12 +7,12 @@ using Framework;
 
 public class Menu : MonoBehaviourEx
 {
-    [SerializeField] private UIMenuInventory _inventory;
-    [SerializeField] private List<UIMenu> _menus;
+    [SerializeField] private MenuInventory _inventory;
+    [SerializeField] private List<MenuBase> _menus;
     [SerializeField] private MenuButtons _menuButtons;
 
-    public CyclicalList<UIMenu> CyclicalList { get; private set; }
-    public UIMenu CurrentMenu { get; private set; }
+    public CyclicalList<MenuBase> CyclicalList { get; private set; }
+    public MenuBase CurrentMenu { get; private set; }
 
     private MenuAnimation _animation;
     private MenuInput _menuInput;
@@ -23,7 +23,7 @@ public class Menu : MonoBehaviourEx
         _animation = gameObject.AddComponent<MenuAnimation>();
         _animation.TransitionOutFinished += Animation_TransitionOutFinished;
 
-        CyclicalList = new CyclicalList<UIMenu>(_menus);
+        CyclicalList = new CyclicalList<MenuBase>(_menus);
         CyclicalList.Wrapped = true;
         CyclicalList.Moved += Menu_Moved;
 
@@ -61,7 +61,7 @@ public class Menu : MonoBehaviourEx
         CurrentMenu.gameObject.GetComponent<InputGroupHandler>((comp) => comp.InputEnabled = false);
     }
 
-    public void SetMenu(UIMenu menu)
+    public void SetMenu(MenuBase menu)
     {
         if (_menus.Contains(menu) && CurrentMenu != null && menu != CurrentMenu)
         {
@@ -71,12 +71,12 @@ public class Menu : MonoBehaviourEx
         }
     }
 
-    private void MenuButton_OnPressed(UIMenu menu)
+    private void MenuButton_OnPressed(MenuBase menu)
     {
         SetMenu(menu);
     }
 
-    private void Menu_Moved(object sender, CyclicalListEvent<UIMenu> cycleEvent)
+    private void Menu_Moved(object sender, CyclicalListEvent<MenuBase> cycleEvent)
     {
         SetMenu(cycleEvent.Data);
     }

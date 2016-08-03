@@ -10,7 +10,7 @@ public class UserInterface : MonoBehaviour, IGameDependent, IInputHandler
 
     public Menu menu;
     public UIHud Hud;
-    public UIMenuInventory Inventory;
+    public MenuInventory Inventory;
 
     private bool menuOpen;
 
