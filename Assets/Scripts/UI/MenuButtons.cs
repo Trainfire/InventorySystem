@@ -1,6 +1,7 @@
 using UnityEngine;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using Framework.UI;
 
 class MenuButtons : MonoBehaviour
@@ -10,6 +11,7 @@ class MenuButtons : MonoBehaviour
     [SerializeField] private UIMenuButton Prototype;
 
     private Dictionary<UIMenuButton, MenuBase> _buttons;
+    private UIMenuButton _current;
 
     public void Awake()
     {
@@ -24,12 +26,36 @@ class MenuButtons : MonoBehaviour
         instance.Label = label;
         instance.Pressed += Button_Pressed;
 
+        if (_current == null)
+            _current = instance;
+
         _buttons.Add(instance, menu);
     }
 
-    private void Button_Pressed(UIMenuButton obj)
+    public void Select(MenuBase menu)
+    {
+        if (_buttons.ContainsValue(menu))
+        {
+            if (_current != null)
+                _current.Selected(false);
+            _current = _buttons.FirstOrDefault(x => x.Value == menu).Key;
+            _current.Selected(true);
+        }
+    }
+
+    public void Update()
+    {
+        if (_current != null)
+        {
+            _current.Button.Select();
+        }
+    }
+
+    private void Button_Pressed(UIMenuButton button)
     {
         if (ButtonPressed != null)
-            ButtonPressed(_buttons[obj]);
+            ButtonPressed(_buttons[button]);
+
+        _current = button;
     }
 }

@@ -52,6 +52,7 @@ public class Menu : MonoBehaviourEx
     protected override void OnShow()
     {
         _menuInput.InputEnabled = true;
+        _menuButtons.Select(CurrentMenu);
         CurrentMenu.gameObject.GetComponent<InputGroupHandler>((comp) => comp.InputEnabled = true);
         CurrentMenu.SetVisibility(true);
         _menuInOutAnimation.TransitionIn();
@@ -71,6 +72,7 @@ public class Menu : MonoBehaviourEx
 
         if (_menus.Contains(menu) && CurrentMenu != null && menu != CurrentMenu)
         {
+            _menuButtons.Select(menu);
             _menuInput.InputEnabled = false;
             _menuTransitionAnimation.Transition(CurrentMenu, menu, (newMenu) =>
             {
