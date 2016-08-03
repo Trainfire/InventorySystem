@@ -7,21 +7,24 @@ using Framework;
 
 public class Menu : MonoBehaviourEx
 {
-    [SerializeField] private MenuInventory _inventory;
     [SerializeField] private List<MenuBase> _menus;
     [SerializeField] private MenuButtons _menuButtons;
 
     public CyclicalList<MenuBase> CyclicalList { get; private set; }
     public MenuBase CurrentMenu { get; private set; }
 
-    private MenuAnimation _animation;
+    private MenuAnimation _menuInOutAnimation;
+    private MenuTransitionAnimation _menuTransitionAnimation;
     private MenuInput _menuInput;
 
     protected override void OnFirstShow()
     {
         _disableOnHide = false;
-        _animation = gameObject.AddComponent<MenuAnimation>();
-        _animation.TransitionOutFinished += Animation_TransitionOutFinished;
+
+        _menuInOutAnimation = gameObject.AddComponent<MenuAnimation>();
+        _menuInOutAnimation.TransitionOutFinished += InOutAnimation_Finished;
+
+        _menuTransitionAnimation = gameObject.AddComponent<MenuTransitionAnimation>();
 
         CyclicalList = new CyclicalList<MenuBase>(_menus);
         CyclicalList.Wrapped = true;
@@ -51,23 +54,29 @@ public class Menu : MonoBehaviourEx
         _menuInput.InputEnabled = true;
         CurrentMenu.gameObject.GetComponent<InputGroupHandler>((comp) => comp.InputEnabled = true);
         CurrentMenu.SetVisibility(true);
-        _animation.TransitionIn();
+        _menuInOutAnimation.TransitionIn();
     }
 
     protected override void OnHide()
     {
         _menuInput.InputEnabled = false;
-        _animation.TransitionOut();
+        _menuInOutAnimation.TransitionOut();
         CurrentMenu.gameObject.GetComponent<InputGroupHandler>((comp) => comp.InputEnabled = false);
     }
 
     public void SetMenu(MenuBase menu)
     {
+        if (!_menuInput.InputEnabled)
+            return;
+
         if (_menus.Contains(menu) && CurrentMenu != null && menu != CurrentMenu)
         {
-            CurrentMenu.SetVisibility(false);
-            CurrentMenu = menu;
-            CurrentMenu.SetVisibility(true);
+            _menuInput.InputEnabled = false;
+            _menuTransitionAnimation.Transition(CurrentMenu, menu, (newMenu) =>
+            {
+                CurrentMenu = newMenu;
+                _menuInput.InputEnabled = true;
+            });
         }
     }
 
@@ -81,10 +90,10 @@ public class Menu : MonoBehaviourEx
         SetMenu(cycleEvent.Data);
     }
 
-    private void Animation_TransitionOutFinished()
+    private void InOutAnimation_Finished()
     {
-        _inventory.SetVisibility(false);
-        _inventory.gameObject.SetActive(false);
+        CurrentMenu.SetVisibility(false);
+        CurrentMenu.gameObject.SetActive(false);
     }
 }
 

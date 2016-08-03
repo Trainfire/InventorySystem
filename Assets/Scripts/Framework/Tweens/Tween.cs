@@ -14,7 +14,7 @@ namespace Framework
         public T From { get; set; }
         public T To { get; set; }
 
-        bool Tweening { get; set; }
+        public bool Tweening { get; set; }
         float CurrentTime { get; set; }
         UnityAction OnDone { get; set; }
 
