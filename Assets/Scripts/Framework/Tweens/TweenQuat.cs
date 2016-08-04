@@ -6,9 +6,6 @@ namespace Framework
 {
     public class TweenQuat : Tween<Quaternion>
     {
-        public Quaternion From;
-        public Quaternion To;
-
         protected override Quaternion OnTween(float t)
         {
             return Quaternion.Lerp(From, To, t);
