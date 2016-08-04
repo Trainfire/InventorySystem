@@ -3,7 +3,7 @@ using System.Collections;
 
 namespace Framework.UI
 {
-    public class UIDataView<TData> : MonoBehaviour
+    public class UIDataView<TData> : MonoBehaviourEx
     {
         public TData Data { get; private set; }
 

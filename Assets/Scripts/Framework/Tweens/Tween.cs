@@ -52,9 +52,9 @@ namespace Framework
 
                 if (CurrentTime > Duration)
                 {
-                    Tweening = false;
-
                     Value = To;
+
+                    Tweening = false;
 
                     if (OnDone != null)
                         OnDone();

@@ -1,4 +1,5 @@
 using UnityEngine;
+using System;
 using System.Collections;
 
 namespace Framework
@@ -36,6 +37,17 @@ namespace Framework
                 if (_disableOnHide)
                     gameObject.SetActive(false);
             }
+        }
+
+        public void Kill(Action postKill)
+        {
+            OnKill();
+            postKill();
+        }
+
+        protected virtual void OnKill()
+        {
+
         }
 
         /// <summary>

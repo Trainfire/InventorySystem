@@ -10,7 +10,7 @@ public class UIHud : GameBase, IStateListener
     public UIWorldItem worldItemPrototype;
     public InteractableObjectListener InteractableListener;
 
-    private UIWorldItem worldItemInstance;
+    private UIWorldItem _worldItemInstance;
 
     public override void Initialize(Game game)
     {
@@ -33,9 +33,12 @@ public class UIHud : GameBase, IStateListener
 
     void ShowItem(Item item)
     {
-        worldItemInstance = UIUtility.Add<UIWorldItem>(transform, worldItemPrototype.gameObject);
-        worldItemInstance.SetData(item.ItemData);
-        worldItemInstance.SetPrompt("Take (E)");
+        if (_worldItemInstance == null)
+            _worldItemInstance = UIUtility.Add<UIWorldItem>(transform, worldItemPrototype.gameObject);
+
+        _worldItemInstance.SetData(item.ItemData);
+        _worldItemInstance.SetPrompt("Take (E)"); // temp
+        _worldItemInstance.SetVisibility(true);
 
         // Listen for item pickup so we can cleanup UI.
         item.PickedUp.AddListener(OnItemPickedUp);
@@ -48,8 +51,10 @@ public class UIHud : GameBase, IStateListener
 
     void RemoveItemUI()
     {
-        if (worldItemInstance != null)
-            Destroy(worldItemInstance.gameObject);
+        if (_worldItemInstance != null)
+        {
+            _worldItemInstance.SetVisibility(false);
+        }
     }
 
     void IStateListener.OnStateChanged(State state)

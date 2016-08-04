@@ -7,6 +7,7 @@ public class InteractableObjectListener : MonoBehaviour
     public InteractableObjectEvent LookEntered;
     public InteractableObjectEvent LookLeft;
 
+    private RaycastHit lastHit;
     private InteractableObject currentItem;
 
     public void Awake()
@@ -23,12 +24,14 @@ public class InteractableObjectListener : MonoBehaviour
 
         if (Physics.Raycast(ray, out hit))
         {
-            hitItem = hit.collider.GetComponent<InteractableObject>();
-            if (hitItem != null)
+            if (hit.collider != lastHit.collider)
             {
-                if (currentItem != hitItem)
-                {
+                if (currentItem != null)
                     LeaveItem();
+
+                hitItem = hit.collider.GetComponent<InteractableObject>();
+                if (hitItem != null)
+                {
                     currentItem = hitItem;
                     currentItem.LookEnter();
 
@@ -36,11 +39,13 @@ public class InteractableObjectListener : MonoBehaviour
                         LookEntered.Invoke(currentItem);
                 }
             }
+
+            lastHit = hit;
         }
-        else
+        else if (currentItem != null)
         {
             LeaveItem();
-        }
+        } 
     }
 
     public void OnDisable()
